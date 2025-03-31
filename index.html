@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title> webgl also black screen of death fml</title>
+    </head>
+
+    <body onload="InitWebGL();">
+        <canvas id="gl" width="800px" height="600px">
+            eeeeeeeeeee
+        </canvas>
+
+        <textarea id="vs" spellcheck="false">
+            precision mediump float;
+            attribute vec3 Pos;
+            attribute vec3 Color;
+            varying vec3 vertexColor;
+
+            void main() {
+                gl_Position = vec4(Pos, 1.0);
+                vertexColor = Color;
+            }
+        </textarea>
+
+        <textarea id="fs" spellcheck="false">
+            precision mediump float;
+            varying vec3 vertexColor;
+
+            void main() {
+                gl_FragColor = vec4(vertexColor, 1.0);
+            }
+
+        </textarea>
+
+        <script src="js/webgl.js" defer>
+        </script>
+    </body>
+
+ 
+</html>
