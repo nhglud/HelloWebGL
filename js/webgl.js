@@ -224,110 +224,53 @@ function CreateBox(width, height, length) {
 }
 
 
-function CreateSubDividedPlane(width, height, divX, divY) {
+function CreateSubDividedPlane(width, height, length, divX, divY) {
     vertices.length = 0;
     const w = width * 0.5;
     const h = height * 0.5;
-    const subw = w / divX;
-    const subh = h / divY;
+    const l = length * 0.5;
+    const subw = width/ divX;
+    const subh = height / divY;
 
-    for (let i = 0; i < divX; i++) {
-        const posX = i * subw;
-        const offsetX = (i + 1)* subw;
+    // for (let i = 0; i < divX; i++) {
+    //     const posX = i * subw;
+    //     const offsetX = (i + 1)* subw;
 
-        const bw = i % 2 === 0 ? 1.0 : 0.0;
-        AddQuad(
-            -w + posX , h, 0, bw, bw, bw,
-            -w + posX,-h, 0, bw, bw, bw,
-            -w + offsetX,-h, 0, bw, bw, bw,
-            -w + offsetX, h, 0, bw, bw, bw);      
-    }     
+    //     const bw = i % 2 === 0 ? 1.0 : 0.0;
+    //     AddQuad(
+    //         -w + posX , h, 0, bw, bw, bw,
+    //         -w + posX,-h, 0, bw, bw, bw,
+    //         -w + offsetX,-h, 0, bw, bw, bw,
+    //         -w + offsetX, h, 0, bw, bw, bw);      
+    // }     
     
     
-    // for (let j = 0; j < divY; j++) {
-    //     for (let i = 0; i < divX; i++) {
-    //         const posY = j * subh;
-    //         const posX = i * subw;
-    //         const offsetX = (i + 1)* subw;
-    //         const offsety = (i + 1)* subh;
+    for (let j = 0; j < divY; j++) {
+        for (let i = 0; i < divX; i++) {
+            const posY = j * subh;
+            const posX = i * subw;
+            const offsetX = (i + 1)* subw;
+            const offsety = (j + 1)* subh;
 
-    //         const bw = i % 2 === 0 ? 1.0 : 0.0;
-    //         AddQuad(
-    //             -w + posX , -h + posY, 0, bw, bw, bw,
-    //             -w + posX,-h + offsety, 0, bw, bw, bw,
-    //             -w + offsetX,-h + offsety, 0, bw, bw, bw,
-    //             -w + offsetX, h + posY, 0, bw, bw, bw);      
-    //     }     
-        
-    // }
+            const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
+            AddQuad(
+                -w + posX , -h + offsety, -l, bw, bw, bw,
+                -w + posX, -h + posY, -l, bw, bw, bw,
+                -w + offsetX, -h + posY, -l, bw, bw, bw,
+                -w + offsetX, -h + offsety, -l, bw, bw, bw);     
+            
+            AddQuad(
+                w - posX, h - offsety, l, bw, bw, bw,
+                w - posX, h - posY, l, bw, bw, bw,
+                w - offsetX, h - posY, l, bw, bw, bw,
+                w - offsetX, h - offsety, l, bw, bw, bw);  
+            
+        }       
+    }
     
-
-    // for (let j = 0; j < divY; j++) {
-    //     const offsetY = j * h;
-    //     for (let i = 0; i < divX; i++) {
-    //         const offsetX = i * w;
-    //         const bw = i % 2 === 0 && j % 2 == 0 ? 1.0 : 0.0;
-    //         AddQuad(
-    //             -w + offsetX, h + offsetY, 0, bw, bw, bw,
-    //             -w + offsetX,-h + offsetY, 0, bw, bw, bw,
-    //             w + offsetX ,-h + offsetY, 0, bw, bw, bw,
-    //             w + offsetX, h + offsetY, 0, bw, bw, bw);      
-    //     }    
-    // }
-   
+    
 
 }
-
-
-// function CreateSubdivBox(width, height, length, divX, divY, divZ) {
-//     vertices.length = 0;
-//     const w = width * 0.5;
-//     const h = height * 0.5;
-//     const l = length * 0.5;
-
-//     for (let i = 1; i <= divX; i++) {
-//         const color = i % 2 == 0 ? 1.0 : 0.0;
-//         const subw = w / divX;
-//         const subh = h / divY;
-
-//         AddQuad(
-//             -subw, h, -l, color, color, color,
-//             -w,-h, -l, color, color, color,
-//             w,-h, -l, color, color, color,
-//             w, h, -l, color, color, color);   
-//     }
-
-//     AddQuad(
-//         w, h, l, 0.0, 0.0, 1.0,
-//         w,-h, l, 0.0, 0.0, 1.0,
-//         -w,-h, l, 0.0, 0.0, 1.0,
-//         -w, h, l, 0.0, 0.0, 1.0);  
-
-//     AddQuad(
-//         -w, h, l, 0.0, 1.0, 1.0,
-//         -w,-h, l, 0.0, 1.0, 1.0,
-//         -w,-h, -l, 0.0, 1.0, 1.0,
-//         -w, h, -l, 0.0, 1.0, 1.0);  
-
-//     AddQuad(
-//         w, -h, l, 0.0, 1.0, 0.0,
-//         w, h, l, 0.0, 1.0, 0.0,
-//         w, h, -l, 0.0, 1.0, 0.0,
-//         w, -h, -l, 0.0, 1.0, 0.0);
-
-//     AddQuad(
-//         -w, h, l, 1.0, 1.0, 0.0,
-//         -w, h, -l, 1.0, 1.0, 0.0,
-//         w, h, -l, 1.0, 1.0, 0.0,
-//         w, h, l, 1.0, 1.0, 0.0);
-    
-//     AddQuad(
-//         -w, -h, l, 1.0, 0.0, 1.0,
-//         w, -h, l, 1.0, 0.0, 1.0,
-//         w, -h, -l, 1.0, 0.0, 1.0,
-//         -w, -h, -l, 1.0, 0.0, 1.0);
-// }
-
 
 
 function CreateGeometryBuffers(program) {
@@ -385,7 +328,7 @@ function CreateGeometryUI() {
         case 0: CreateTriangle(w, h); break;
         case 1: CreateQuad(w, h); break;
         case 2: CreateBox(w, h, l); break;
-        case 3: CreateSubDividedPlane(w, h, 8, 4); break;
+        case 3: CreateSubDividedPlane(w, h, l, 8, 8); break;
     }
 }
 
