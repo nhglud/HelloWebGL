@@ -11,8 +11,8 @@ document.getElementById('gl').addEventListener(
 'mousemove', function(e) {
     if (e.buttons == 1) {
         // Left mouse button pressed
-        angle[0] -= (mouseY - e.y) * 0.1;
-        angle[1] += (mouseX - e.x) * 0.1;
+        angle[0] -= (mouseY - e.y) * 0.02;
+        angle[1] += (mouseX - e.x) * 0.02;
         gl.uniform4fv(angleGL, new Float32Array(angle));
         Render();
     }
@@ -232,18 +232,6 @@ function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
     const subw = width/ divX;
     const subh = height / divY;
     const subl = length / divZ;
-
-    // for (let i = 0; i < divX; i++) {
-    //     const posX = i * subw;
-    //     const offsetX = (i + 1)* subw;
-
-    //     const bw = i % 2 === 0 ? 1.0 : 0.0;
-    //     AddQuad(
-    //         -w + posX , h, 0, bw, bw, bw,
-    //         -w + posX,-h, 0, bw, bw, bw,
-    //         -w + offsetX,-h, 0, bw, bw, bw,
-    //         -w + offsetX, h, 0, bw, bw, bw);      
-    // }     
     
     for (let j = 0; j < divY; j++) {
         for (let i = 0; i < divX; i++) {
@@ -251,8 +239,8 @@ function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
             const posX = i * subw;
             const offsetX = (i + 1)* subw;
             const offsety = (j + 1)* subh;
-
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
+
             AddQuad(
                 -w + posX , -h + offsety, -l, bw, bw, bw,
                 -w + posX, -h + posY, -l, bw, bw, bw,
@@ -273,14 +261,13 @@ function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
             const posY = i * subh;
             const offsetY = (i + 1)* subh;
             const offsetZ = (j + 1)* subl;
-
             const bw = (i + j) % 2 === 1 ? 1.0 : 0.0;
+
             AddQuad(
                 -w, -h + posY, -l + offsetZ, bw, bw, bw,
                 -w, -h + posY, -l + posZ, bw, bw, bw,
                 -w, -h + offsetY, -l + posZ, bw, bw, bw,
-                -w, -h + offsetY, -l + offsetZ, bw, bw, bw);     
-            
+                -w, -h + offsetY, -l + offsetZ, bw, bw, bw);      
             AddQuad(
                 w, -h + posY, -l + posZ, bw, bw, bw,
                 w, -h + posY, -l + offsetZ, bw, bw, bw,
@@ -296,7 +283,6 @@ function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
             const posX = i * subw;
             const offsetX = (i + 1)* subw;
             const offsetZ = (j + 1)* subl;
-
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
             AddQuad(
@@ -304,7 +290,6 @@ function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
                 w - posX, -h, -l + posZ, bw, bw, bw,
                 w - offsetX, -h, -l + posZ, bw, bw, bw,
                 w - offsetX, -h, -l + offsetZ, bw, bw, bw);  
-
             AddQuad(
                 w - posX, h, -l + posZ, bw, bw, bw,
                 w - posX, h, -l + offsetZ, bw, bw, bw,
@@ -312,7 +297,6 @@ function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
                 w - offsetX, h, -l + posZ, bw, bw, bw);  
         }       
     }
-    
 }
 
 
@@ -352,11 +336,11 @@ function Render(){
 
 function CreateGeometryUI() {
     const ew = document.getElementById('w');
-    const w = ew ? ew.value : 1.0;
+    const w = ew ? ew.value : 0.5;
     const eh = document.getElementById('h');
-    const h = eh ? eh.value : 1.0;
+    const h = eh ? eh.value : 0.5;
     const el = document.getElementById('l');
-    const l = el ? el.value : 1.0;
+    const l = el ? el.value : 0.5;
 
     document.getElementById('ui').innerHTML =
         'Width: <input type="number" id="w" value="' + w +
