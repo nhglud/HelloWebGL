@@ -161,6 +161,7 @@ function AddQuad(
         x1, y1, z1, r1, g1, b1);
 }
 
+
 function CreateTriangle(width, height) {
     vertices.length = 0;
     const w = width * 0.5;
@@ -179,10 +180,54 @@ function CreateQuad(width, height) {
         -w, h, 0.0, 1.0, 0.0, 0.0,
         -w,-h, 0.0, 0.0, 1.0, 0.0,
         w,-h, 0.0, 0.0, 0.0, 1.0,
-        w, h, 0.0, 1.0, 1.0, 0.0);
-        
+        w, h, 0.0, 1.0, 1.0, 0.0);      
 }
     
+function CreateBox(width, height, length) {
+    vertices.length = 0;
+    const w = width * 0.5;
+    const h = height * 0.5;
+    const l = length * 0.5;
+
+    AddQuad(
+        -w, h, -l, 1.0, 0.0, 0.0,
+        -w,-h, -l, 1.0, 0.0, 0.0,
+        w,-h, -l, 1.0, 0.0, 0.0,
+        w, h, -l, 1.0, 0.0, 0.0);
+
+    AddQuad(
+        w, h, l, 0.0, 0.0, 1.0,
+        w,-h, l, 0.0, 0.0, 1.0,
+        -w,-h, l, 0.0, 0.0, 1.0,
+        -w, h, l, 0.0, 0.0, 1.0);  
+
+    AddQuad(
+        -w, h, l, 0.0, 1.0, 1.0,
+        -w,-h, l, 0.0, 1.0, 1.0,
+        -w,-h, -l, 0.0, 1.0, 1.0,
+        -w, h, -l, 0.0, 1.0, 1.0);  
+
+    AddQuad(
+        w, -h, l, 0.0, 1.0, 0.0,
+        w, h, l, 0.0, 1.0, 0.0,
+        w, h, -l, 0.0, 1.0, 0.0,
+        w, -h, -l, 0.0, 1.0, 0.0);
+
+    AddQuad(
+        -w, h, l, 1.0, 1.0, 0.0,
+        -w, h, -l, 1.0, 1.0, 0.0,
+        w, h, -l, 1.0, 1.0, 0.0,
+        w, h, l, 1.0, 1.0, 0.0);
+    
+    AddQuad(
+        -w, -h, l, 1.0, 0.0, 1.0,
+        w, -h, l, 1.0, 0.0, 1.0,
+        w, -h, -l, 1.0, 0.0, 1.0,
+        -w, -h, -l, 1.0, 0.0, 1.0);
+
+
+}
+
 function CreateGeometryBuffers(program) {
     CreateGeometryUI();
 
@@ -233,6 +278,8 @@ function CreateGeometryUI() {
     switch (e.selectedIndex) {
         case 0: CreateTriangle(w, h); break;
         case 1: CreateQuad(w, h); break;
+        case 2: CreateBox(w, h, 1); break;
+
     }
 
 

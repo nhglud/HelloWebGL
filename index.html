@@ -38,8 +38,6 @@
                     vec4(siY, 0.0, coY, 0.0),
                     vec4(0.0, 0.0, 0.0, 1.0));
                 
-
-
                 gl_Position = matY * matX * vec4(Pos, 1.0);
                 vertexColor = Color;
             }
@@ -52,11 +50,11 @@
             void main() {
                 gl_FragColor = vec4(vertexColor, 1.0);
             }
-
         </textarea>
         <select id="shape" onchange="InitShaders();">
             <option selected>Triangle</option>
             <option>Quad</option>
+            <option>Box</option>
         </select>
         <div id="ui">Generate UI for geometry here!</div>
         <script src="js/webgl.js" defer>
