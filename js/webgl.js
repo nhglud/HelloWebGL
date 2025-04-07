@@ -168,13 +168,12 @@ function CreateQuad(width, height) {
     
 
 function CreateGeometryBuffers(program) {
-    
-    AddQuad(
-        -0.5, 0.5, 0.0, 1.0, 0.0, 0.0,
-        -0.5,-0.5, 0.0, 0.0, 1.0, 0.0,
-        0.5,-0.5, 0.0, 0.0, 0.0, 1.0,
-        0.5, 0.5, 0.0, 1.0, 1.0, 0.0);
-        
+    e = document.getElementById('shape');
+    switch (e.selectedIndex) {
+        case 0: CreateTriangle(1.0, 1.0); break;
+        case 1: CreateQuad(1.0, 1.0); break;
+    }
+
     CreateVBO(program, new Float32Array(vertices));
     
     gl.useProgram(program);
