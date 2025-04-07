@@ -23,6 +23,7 @@ document.getElementById('gl').addEventListener(
     mouseY = e.y;
 });
 
+
 function InitWebGL() {
 
     if(!gl) {
@@ -183,15 +184,12 @@ function CreateQuad(width, height) {
 }
     
 function CreateGeometryBuffers(program) {
-    // e = document.getElementById('shape');
-    // switch (e.selectedIndex) {
-    //     case 0: CreateTriangle(1.0, 1.0); break;
-    //     case 1: CreateQuad(1.0, 1.0); break;
-    // }
     CreateGeometryUI();
 
     CreateVBO(program, new Float32Array(vertices));
     
+    angleGL = gl.getUniformLocation(program, 'Angle');
+
     gl.useProgram(program);
 
     Render();
