@@ -22,7 +22,6 @@ document.getElementById('gl').addEventListener(
 
 
 function InitWebGL() {
-
     if(!gl) {
         alert('webgl not supported');
         return;
@@ -39,7 +38,6 @@ function InitWebGL() {
 }
 
 function InitViewport() {
-
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.clearColor(0.0, 0.4, 0.6, 1.0);
     gl.enable(gl.DEPTH_TEST);
@@ -50,7 +48,6 @@ function InitViewport() {
 }
 
 function InitShaders() {
-
     const vertex = InitVertexShader();
     const fragment = InitFragmentShader();
 
@@ -224,7 +221,7 @@ function CreateBox(width, height, length) {
 }
 
 
-function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
+function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
     vertices.length = 0;
     const w = width * 0.5;
     const h = height * 0.5;
@@ -238,19 +235,19 @@ function CreateSubDividedPlane(width, height, length, divX, divY, divZ) {
             const posY = j * subh;
             const posX = i * subw;
             const offsetX = (i + 1)* subw;
-            const offsety = (j + 1)* subh;
+            const offsetY = (j + 1)* subh;
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
             AddQuad(
-                -w + posX , -h + offsety, -l, bw, bw, bw,
+                -w + posX , -h + offsetY, -l, bw, bw, bw,
                 -w + posX, -h + posY, -l, bw, bw, bw,
                 -w + offsetX, -h + posY, -l, bw, bw, bw,
-                -w + offsetX, -h + offsety, -l, bw, bw, bw);     
+                -w + offsetX, -h + offsetY, -l, bw, bw, bw);     
             
             AddQuad(
                 w - posX, h - posY, l, bw, bw, bw,
-                w - posX, h - offsety, l, bw, bw, bw,
-                w - offsetX, h - offsety, l, bw, bw, bw,
+                w - posX, h - offsetY, l, bw, bw, bw,
+                w - offsetX, h - offsetY, l, bw, bw, bw,
                 w - offsetX, h - posY, l, bw, bw, bw);  
         }       
     }
@@ -336,10 +333,10 @@ function Render(){
 
 function CreateGeometryUI() {
     const ew = document.getElementById('w');
-    const w = ew ? ew.value : 0.5;
     const eh = document.getElementById('h');
-    const h = eh ? eh.value : 0.5;
     const el = document.getElementById('l');
+    const w = ew ? ew.value : 0.5;
+    const h = eh ? eh.value : 0.5;
     const l = el ? el.value : 0.5;
 
     document.getElementById('ui').innerHTML =
@@ -355,7 +352,7 @@ function CreateGeometryUI() {
         case 0: CreateTriangle(w, h); break;
         case 1: CreateQuad(w, h); break;
         case 2: CreateBox(w, h, l); break;
-        case 3: CreateSubDividedPlane(w, h, l, 8, 8, 8); break;
+        case 3: CreateSubdividedBox(w, h, l, 8, 8, 8); break;
     }
 }
 
