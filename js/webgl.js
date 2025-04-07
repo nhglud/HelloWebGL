@@ -196,8 +196,8 @@ function CreateBox(width, height, length) {
 
     AddQuad(
         -w, h, l, 0.0, 1.0, 1.0,
-        -w,-h, l, 0.0, 1.0, 1.0,
-        -w,-h, -l, 0.0, 1.0, 1.0,
+        -w, -h, l, 0.0, 1.0, 1.0,
+        -w, -h, -l, 0.0, 1.0, 1.0,
         -w, h, -l, 0.0, 1.0, 1.0);  
 
     AddQuad(
@@ -332,9 +332,17 @@ function CreateGeometryUI() {
     const ew = document.getElementById('w');
     const eh = document.getElementById('h');
     const el = document.getElementById('l');
+    const ex = document.getElementById('div-x');
+    const ey = document.getElementById('div-y');
+    const ez = document.getElementById('div-z');
+
+
     const w = ew ? ew.value : 0.5;
     const h = eh ? eh.value : 0.5;
     const l = el ? el.value : 0.5;
+    const divX = ex ? ex.value : 2;
+    const divY = ey ? ey.value : 2;
+    const divZ = ey ? ez.value : 2;
 
     document.getElementById('ui').innerHTML =
         'Width: <input type="number" id="w" value="' + w +
@@ -342,6 +350,12 @@ function CreateGeometryUI() {
         'Height: <input type="number" id="h" value="' + h +
         '" onchange="InitShaders();"><br>' +
         'Length: <input type="number" id="l" value="' + l +
+        '" onchange="InitShaders();">' + 
+        'Div X: <input type="number" id="div-x" value="' + divX +
+        '" onchange="InitShaders();">' +
+        'Div Y: <input type="number" id="div-y" value="' + divY +
+        '" onchange="InitShaders();">' +
+        'Div Z: <input type="number" id="div-z" value="' + divZ +
         '" onchange="InitShaders();">';
 
     let e = document.getElementById('shape');
@@ -349,7 +363,7 @@ function CreateGeometryUI() {
         case 0: CreateTriangle(w, h); break;
         case 1: CreateQuad(w, h); break;
         case 2: CreateBox(w, h, l); break;
-        case 3: CreateSubdividedBox(w, h, l, 2, 2, 2); break;
+        case 3: CreateSubdividedBox(w, h, l, divX, divY, divZ); break;
     }
 }
 
