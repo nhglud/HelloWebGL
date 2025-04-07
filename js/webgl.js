@@ -7,6 +7,22 @@ var gl = document.getElementById('gl').getContext('webgl') ||
 
 var vertices = [];
 
+var mouseX = 0, mouseY = 0;
+var angle = [ 0.0, 0.0, 0.0, 1.0 ];
+var angleGL = 0;
+document.getElementById('gl').addEventListener(
+'mousemove', function(e) {
+    if (e.buttons == 1) {
+        // Left mouse button pressed
+        angle[0] -= (mouseY - e.y) * 0.1;
+        angle[1] += (mouseX - e.x) * 0.1;
+        gl.uniform4fv(angleGL, new Float32Array(angle));
+        Render();
+    }
+    mouseX = e.x;
+    mouseY = e.y;
+});
+
 function InitWebGL() {
 
     if(!gl) {
@@ -166,13 +182,13 @@ function CreateQuad(width, height) {
         
 }
     
-
 function CreateGeometryBuffers(program) {
-    e = document.getElementById('shape');
-    switch (e.selectedIndex) {
-        case 0: CreateTriangle(1.0, 1.0); break;
-        case 1: CreateQuad(1.0, 1.0); break;
-    }
+    // e = document.getElementById('shape');
+    // switch (e.selectedIndex) {
+    //     case 0: CreateTriangle(1.0, 1.0); break;
+    //     case 1: CreateQuad(1.0, 1.0); break;
+    // }
+    CreateGeometryUI();
 
     CreateVBO(program, new Float32Array(vertices));
     
@@ -203,7 +219,26 @@ function Render(){
     gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 6);
 }
 
+function CreateGeometryUI() {
+    const ew = document.getElementById('w');
+    const w = ew ? ew.value : 1.0;
+    const eh = document.getElementById('h');
+    const h = eh ? eh.value : 1.0;
 
+    document.getElementById('ui').innerHTML =
+        'Width: <input type="number" id="w" value="' + w +
+        '" onchange="InitShaders();"<br>' + 
+        'Height: <input type="number" id="h" value="' + h +
+        '" onchange="InitShaders();">';
+
+    let e = document.getElementById('shape');
+    switch (e.selectedIndex) {
+        case 0: CreateTriangle(w, h); break;
+        case 1: CreateQuad(w, h); break;
+    }
+
+
+}
 
 
 
