@@ -116,7 +116,6 @@ function ValidateShaderProgram(p) {
     return true;
 }
 
-
 function AddVertex(x, y, z, r, g, b) {
     const index = vertices.length;
     vertices.length += 6;
@@ -220,7 +219,6 @@ function CreateBox(width, height, length) {
         -w, -h, -l, 1.0, 0.0, 1.0);
 }
 
-
 function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
     vertices.length = 0;
     const w = width * 0.5;
@@ -296,7 +294,6 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
     }
 }
 
-
 function CreateGeometryBuffers(program) {
     CreateGeometryUI();
 
@@ -352,7 +349,7 @@ function CreateGeometryUI() {
         case 0: CreateTriangle(w, h); break;
         case 1: CreateQuad(w, h); break;
         case 2: CreateBox(w, h, l); break;
-        case 3: CreateSubdividedBox(w, h, l, 8, 8, 8); break;
+        case 3: CreateSubdividedBox(w, h, l, 2, 2, 2); break;
     }
 }
 
