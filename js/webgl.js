@@ -1,7 +1,4 @@
 
-
-
-
 var gl = document.getElementById('gl').getContext('webgl') ||
          document.getElementById('gl').getContext('experimental-webgl');
 
@@ -224,8 +221,6 @@ function CreateBox(width, height, length) {
         w, -h, l, 1.0, 0.0, 1.0,
         w, -h, -l, 1.0, 0.0, 1.0,
         -w, -h, -l, 1.0, 0.0, 1.0);
-
-
 }
 
 function CreateGeometryBuffers(program) {
@@ -267,22 +262,23 @@ function CreateGeometryUI() {
     const w = ew ? ew.value : 1.0;
     const eh = document.getElementById('h');
     const h = eh ? eh.value : 1.0;
+    const el = document.getElementById('l');
+    const l = el ? el.value : 1.0;
 
     document.getElementById('ui').innerHTML =
         'Width: <input type="number" id="w" value="' + w +
         '" onchange="InitShaders();"<br>' + 
         'Height: <input type="number" id="h" value="' + h +
+        '" onchange="InitShaders();"><br>' +
+        'Length: <input type="number" id="l" value="' + l +
         '" onchange="InitShaders();">';
 
     let e = document.getElementById('shape');
     switch (e.selectedIndex) {
         case 0: CreateTriangle(w, h); break;
         case 1: CreateQuad(w, h); break;
-        case 2: CreateBox(w, h, 1); break;
-
+        case 2: CreateBox(w, h, l); break;
     }
-
-
 }
 
 
