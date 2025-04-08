@@ -224,7 +224,7 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
     const w = width * 0.5;
     const h = height * 0.5;
     const l = length * 0.5;
-    const subw = width/ divX;
+    const subw = width / divX;
     const subh = height / divY;
     const subl = length / divZ;
     
@@ -232,8 +232,8 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
         for (let i = 0; i < divX; i++) {
             const posY = j * subh;
             const posX = i * subw;
-            const offsetX = (i + 1)* subw;
-            const offsetY = (j + 1)* subh;
+            const offsetX = (i + 1) * subw;
+            const offsetY = (j + 1) * subh;
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
             AddQuad(
@@ -254,8 +254,8 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
         for (let i = 0; i < divY; i++) {
             const posZ = j * subl;
             const posY = i * subh;
-            const offsetY = (i + 1)* subh;
-            const offsetZ = (j + 1)* subl;
+            const offsetY = (i + 1) * subh;
+            const offsetZ = (j + 1) * subl;
             const bw = (i + j) % 2 === 1 ? 1.0 : 0.0;
 
             AddQuad(
@@ -276,8 +276,8 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
         for (let i = 0; i < divX; i++) {
             const posZ = j * subl;
             const posX = i * subw;
-            const offsetX = (i + 1)* subw;
-            const offsetZ = (j + 1)* subl;
+            const offsetX = (i + 1) * subw;
+            const offsetZ = (j + 1) * subl;
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
             AddQuad(
@@ -336,13 +336,12 @@ function CreateGeometryUI() {
     const ey = document.getElementById('div-y');
     const ez = document.getElementById('div-z');
 
-
     const w = ew ? ew.value : 0.5;
     const h = eh ? eh.value : 0.5;
     const l = el ? el.value : 0.5;
-    const divX = ex ? ex.value : 2;
-    const divY = ey ? ey.value : 2;
-    const divZ = ey ? ez.value : 2;
+    const divX = ex ? ex.value : 3;
+    const divY = ey ? ey.value : 3;
+    const divZ = ey ? ez.value : 3;
 
     document.getElementById('ui').innerHTML =
         'Width: <input type="number" id="w" value="' + w +

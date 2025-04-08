@@ -2,6 +2,7 @@
 <html>
 
     <head>
+        <link rel="stylesheet" href="css/style.css">
         <meta charset="utf-8">
         <title>Hello, WebGL</title>
     </head>
@@ -50,6 +51,9 @@
                 gl_FragColor = vec4(vertexColor, 1.0);
             }
         </textarea>
+        <div class="container">
+
+        
         <select id="shape" onchange="InitShaders();">
             <option>Triangle</option>
             <option>Quad</option>
@@ -57,6 +61,7 @@
             <option>Subdivided Box</option>
         </select>
         <div id="ui">Generate UI for geometry here!</div>
+        </div>
         <script src="js/webgl.js" defer>
         </script>
     </body>
