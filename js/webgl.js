@@ -185,7 +185,7 @@ function CreateBox(width, height, length) {
     AddQuad(
         -w, h, -l, 1.0, 0.0, 0.0,
         -w,-h, -l, 1.0, 0.0, 0.0,
-        w,-h, -l, 1.0, 0.0, 0.0,
+        w, -h, -l, 1.0, 0.0, 0.0,
         w, h, -l, 1.0, 0.0, 0.0);
 
     AddQuad(
@@ -339,9 +339,9 @@ function CreateGeometryUI() {
     const w = ew ? ew.value : 0.5;
     const h = eh ? eh.value : 0.5;
     const l = el ? el.value : 0.5;
-    const divX = ex ? ex.value : 3;
-    const divY = ey ? ey.value : 3;
-    const divZ = ey ? ez.value : 3;
+    const divX = ex ? ex.value : 4;
+    const divY = ey ? ey.value : 4;
+    const divZ = ey ? ez.value : 4;
 
     document.getElementById('ui').innerHTML =
         'Width: <input type="number" id="w" value="' + w +
