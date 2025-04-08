@@ -1,9 +1,17 @@
+header {
+    color: aliceblue;
+}
+
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: rgb(59, 67, 81);
+
+}
+
+section {
     display: flex;
     flex: auto;
     gap: 0.5rem;
-    background-color: rgb(59, 67, 81);
 }
 
 #vs {
@@ -45,3 +53,8 @@ canvas {
     width: 10rem;
 }
 
+@media (max-width: 768px) { 
+    section {
+        flex-direction: column;
+    }
+}
