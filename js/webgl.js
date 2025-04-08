@@ -341,7 +341,7 @@ function CreateGeometryUI() {
     const l = el ? el.value : 0.5;
     const divX = ex ? ex.value : 4;
     const divY = ey ? ey.value : 4;
-    const divZ = ey ? ez.value : 4;
+    const divZ = ez ? ez.value : 4;
 
     document.getElementById('ui').innerHTML =
         'Width: <input type="number" id="w" value="' + w +
