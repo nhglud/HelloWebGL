@@ -8,11 +8,11 @@ var mouseX = 0, mouseY = 0;
 var angle = [ 0.0, 0.0, 0.0, 1.0 ];
 var angleGL = 0;
 var textureGL = 0;
-var display = [0.0, 0.0,  0.0, 0.0];
+var display = [0.0, 0.0, 0.0, 0.0];
 var displayGL = 0;
 
 document.getElementById('gl').addEventListener(
-'mousemove', function(e) {
+    'mousemove', function(e) {
     if (e.buttons == 1) {
         // Left mouse button pressed
         angle[0] -= (mouseY - e.y) * 0.02;
@@ -330,15 +330,15 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
             AddQuad(
-                w - posX, -h, -l + offsetZ, bw, bw, bw,
-                w - posX, -h, -l + posZ, bw, bw, bw,
-                w - offsetX, -h, -l + posZ, bw, bw, bw,
-                w - offsetX, -h, -l + offsetZ, bw, bw, bw);  
+                w - posX, -h, -l + offsetZ, bw, bw, bw,     0.0, 1.0, 
+                w - posX, -h, -l + posZ, bw, bw, bw,       0.0, 0.0,
+                w - offsetX, -h, -l + posZ, bw, bw, bw,    1.0, 0.0,
+                w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0);    
             AddQuad(
-                w - posX, h, -l + posZ, bw, bw, bw,
-                w - posX, h, -l + offsetZ, bw, bw, bw,
-                w - offsetX, h, -l + offsetZ, bw, bw, bw,
-                w - offsetX, h, -l + posZ, bw, bw, bw);  
+                w - posX, h, -l + posZ, bw, bw, bw,          0.0, 1.0,
+                w - posX, h, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
+                w - offsetX, h, -l + offsetZ, bw, bw, bw,1.0, 0.0,
+                w - offsetX, h, -l + posZ, bw, bw, bw, 1.0, 1.0);
         }       
     }
 }
@@ -370,6 +370,7 @@ function CreateVBO(program, vert) {
     let c = gl.getAttribLocation(program, 'Color');
     gl.vertexAttribPointer(c, 3, gl.FLOAT, gl.FALSE, s, o);
     gl.enableVertexAttribArray(c);
+    
     const o2 = o * 2;
     let u = gl.getAttribLocation(program, 'UV');
     gl.vertexAttribPointer(c, 2, gl.FLOAT, gl.FALSE, s, o2);
