@@ -7,6 +7,10 @@ var vertices = [];
 var mouseX = 0, mouseY = 0;
 var angle = [ 0.0, 0.0, 0.0, 1.0 ];
 var angleGL = 0;
+var textureGL = 0;
+var display = [0.0, 0.0,  0.0, 0.0];
+var displayGL = 0;
+
 document.getElementById('gl').addEventListener(
 'mousemove', function(e) {
     if (e.buttons == 1) {
@@ -20,6 +24,50 @@ document.getElementById('gl').addEventListener(
     mouseY = e.y;
 });
 
+function CreateTexture(prog, url) {
+    const texture = LoadTexture(url);
+    
+    gl.pixelStorei(GL_UNPACK_FLIP_Y_WEBGL, true);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+
+    textureGL = gl.getUniformLocation(prog, 'Texture');
+    displayGL = gl.getUniformLocation(prog, 'Display');
+}
+
+function LoadTexture(url) {
+    const texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+
+    const pixel = new Uint8Array([0, 0, 255, 255]);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+    
+    const image = new Image();
+    image.onload = () => {
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, image);
+        SetTextureFilters(image);
+    };
+
+    image.src = url;
+    return texture;
+}
+
+function SetTextreFilters(image) {
+    if(IsPow2(image.width) && IsPow2(image.height)) {
+        gl.generateMipmap(gl.TEXTURE_2D);
+    }
+    else {
+        // ST = UV
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    }
+}
+
+function IsPow2(value) {
+    return (value & (value - 1)) === 0;
+}
 
 function InitWebGL() {
     if(!gl) {
@@ -271,7 +319,6 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
         }       
     }
     
-
     for (let j = 0; j < divZ; j++) {
         for (let i = 0; i < divX; i++) {
             const posZ = j * subl;
