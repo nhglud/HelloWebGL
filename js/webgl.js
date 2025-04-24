@@ -209,10 +209,10 @@ function CreateBox(width, height, length) {
         -w, h, -l, 0.0, 1.0, 1.0,  1.0, 1.0);
 
     AddQuad(
-        w, -h, l, 0.0, 1.0, 0.0,  0.0, 1.0,
-        w, h, l, 0.0, 1.0, 0.0, 0.0, 0.0,
-        w, h, -l, 0.0, 1.0, 0.0, 1.0, 0.0,
-        w, -h, -l, 0.0, 1.0, 0.0, 1.0, 1.0);
+        w, -h, l, 0.0, 1.0, 0.0,  1.0, 0.0,
+        w, h, l, 0.0, 1.0, 0.0, 1.0, 1.0,
+        w, h, -l, 0.0, 1.0, 0.0, 0.0, 1.0,
+        w, -h, -l, 0.0, 1.0, 0.0, 0.0, 0.0);
 
     AddQuad(
         -w, h, l, 1.0, 1.0, 0.0,  0.0, 1.0,
@@ -243,18 +243,22 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const offsetX = (i + 1) * subw;
             const offsetY = (j + 1) * subh;
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
+            const u1 = i / divX;
+            const v1 = j / divY;
+            const u2 = (i + 1) / divX;
+            const v2 = (j + 1) / divY; 
 
             AddQuad(
-                -w + posX , -h + offsetY, -l, bw, bw, bw, 0.0, 1.0,
-                -w + posX, -h + posY, -l, bw, bw, bw, 0.0, 0.0,
-                -w + offsetX, -h + posY, -l, bw, bw, bw, 1.0, 0.0,
-                -w + offsetX, -h + offsetY, -l, bw, bw, bw, 1.0, 1.0);     
+                -w + posX , -h + offsetY, -l, bw, bw, bw, u1, v2,
+                -w + posX, -h + posY, -l, bw, bw, bw, u1, v1,
+                -w + offsetX, -h + posY, -l, bw, bw, bw, u2, v1,
+                -w + offsetX, -h + offsetY, -l, bw, bw, bw, u2, v2);     
             
             AddQuad(
-                w - posX, h - posY, l, bw, bw, bw,      0.0, 1.0,
-                w - posX, h - offsetY, l, bw, bw, bw,    0.0, 0.0,
-                w - offsetX, h - offsetY, l, bw, bw, bw, 1.0, 0.0,
-                w - offsetX, h - posY, l, bw, bw, bw,     1.0, 1.0);
+                w - posX, h - posY, l, bw, bw, bw,  u1, v2,
+                w - posX, h - offsetY, l, bw, bw, bw,  u1, v1,
+                w - offsetX, h - offsetY, l, bw, bw, bw, u2, v1,
+                w - offsetX, h - posY, l, bw, bw, bw,  u2, v2);
         }       
     }
     
@@ -265,12 +269,16 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const offsetY = (i + 1) * subh;
             const offsetZ = (j + 1) * subl;
             const bw = (i + j) % 2 === 1 ? 1.0 : 0.0;
+            const u1 = i / divX;
+            const v1 = j / divY;
+            const u2 = (i + 1) / divX;
+            const v2 = (j + 1) / divY; 
 
             AddQuad(
-                -w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 1.0,
-                -w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 0.0,
-                -w, -h + offsetY, -l + posZ, bw, bw, bw, 1.0, 0.0,
-                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, 1.0, 1.0);      
+                -w, -h + posY, -l + offsetZ, bw, bw, bw, u1, v2,
+                -w, -h + posY, -l + posZ, bw, bw, bw, u1, v1,
+                -w, -h + offsetY, -l + posZ, bw, bw, bw, u2, v1,
+                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, u2, v2);      
             AddQuad(
                 w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 1.0,
                 w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
