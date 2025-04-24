@@ -27,7 +27,7 @@ document.getElementById('gl').addEventListener(
 function CreateTexture(prog, url) {
     const texture = LoadTexture(url);
     
-    gl.pixelStorei(GL_UNPACK_FLIP_Y_WEBGL, true);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
@@ -164,42 +164,44 @@ function ValidateShaderProgram(p) {
     return true;
 }
 
-function AddVertex(x, y, z, r, g, b) {
+function AddVertex(x, y, z, r, g, b, u, v) {
     const index = vertices.length;
-    vertices.length += 6;
+    vertices.length += 8;
     vertices[index + 0] = x;
     vertices[index + 1] = y;
     vertices[index + 2] = z;
     vertices[index + 3] = r;
     vertices[index + 4] = g;
     vertices[index + 5] = b;
+    vertices[index + 6] = u;
+    vertices[index + 7] = v;
 }
 
 function AddTriangle(
-    x1, y1, z1, r1, g1, b1,
-    x2, y2, z2, r2, g2, b2,
-    x3, y3, z3, r3, g3, b3) {
+    x1, y1, z1, r1, g1, b1, u1, v1,
+    x2, y2, z2, r2, g2, b2, u2, v2,
+    x3, y3, z3, r3, g3, b3, u3, v3) {
 
-    AddVertex(x1, y1, z1, r1, g1, b1);
-    AddVertex(x2, y2, z2, r2, g2, b2);
-    AddVertex(x3, y3, z3, r3, g3, b3);
+    AddVertex(x1, y1, z1, r1, g1, b1, u1, v1);
+    AddVertex(x2, y2, z2, r2, g2, b2, u2, v2);
+    AddVertex(x3, y3, z3, r3, g3, b3, u3, v3);
 }
 
 function AddQuad(
-    x1, y1, z1, r1, g1, b1,
-    x2, y2, z2, r2, g2, b2,
-    x3, y3, z3, r3, g3, b3,
-    x4, y4, z4, r4, g4, b4) {
+    x1, y1, z1, r1, g1, b1, u1, v1,
+    x2, y2, z2, r2, g2, b2, u2, v2,
+    x3, y3, z3, r3, g3, b3, u3, v3,
+    x4, y4, z4, r4, g4, b4, u4, v4) {
 
     AddTriangle(
-        x1, y1, z1, r1, g1, b1,
-        x2, y2, z2, r2, g2, b2,
-        x3, y3, z3, r3, g3, b3); 
+        x1, y1, z1, r1, g1, b1, u1, v1,
+        x2, y2, z2, r2, g2, b2, u2, v2,
+        x3, y3, z3, r3, g3, b3, u3, v3); 
     
     AddTriangle(
-        x3, y3, z3, r3, g3, b3,
-        x4, y4, z4, r4, g4, b4,
-        x1, y1, z1, r1, g1, b1);
+        x3, y3, z3, r3, g3, b3, u3, v3,
+        x4, y4, z4, r4, g4, b4, u4, v4,
+        x1, y1, z1, r1, g1, b1, u1, v1);
 }
 
 
@@ -208,9 +210,9 @@ function CreateTriangle(width, height) {
     const w = width * 0.5;
     const h = height * 0.5;
     AddTriangle(
-        0.0, h, 0.0, 1.0, 0.0, 0.0,
-        -w, -h, 0.0, 0.0, 1.0, 0.0,
-        w, -h, 0.0, 0.0, 0.0, 1.0);
+        0.0, h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
+        -w, -h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+        w, -h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0);
 }
 
 function CreateQuad(width, height) {
@@ -218,10 +220,10 @@ function CreateQuad(width, height) {
     const w = width * 0.5;
     const h = height * 0.5;
     AddQuad(
-        -w, h, 0.0, 1.0, 0.0, 0.0,
-        -w,-h, 0.0, 0.0, 1.0, 0.0,
-        w,-h, 0.0, 0.0, 0.0, 1.0,
-        w, h, 0.0, 1.0, 1.0, 0.0);      
+        -w, h, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 
+        -w,-h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+        w,-h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0,
+        w, h, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0);      
 }
     
 function CreateBox(width, height, length) {
@@ -231,40 +233,40 @@ function CreateBox(width, height, length) {
     const l = length * 0.5;
 
     AddQuad(
-        -w, h, -l, 1.0, 0.0, 0.0,
-        -w,-h, -l, 1.0, 0.0, 0.0,
-        w, -h, -l, 1.0, 0.0, 0.0,
-        w, h, -l, 1.0, 0.0, 0.0);
+        -w, h, -l, 1.0, 0.0, 0.0, 0.0, 1.0,
+        -w,-h, -l, 1.0, 0.0, 0.0, 0.0, 0.0,
+        w, -h, -l, 1.0, 0.0, 0.0, 1.0, 0.0,
+        w, h, -l, 1.0, 0.0, 0.0, 1.0, 1.0);
 
     AddQuad(
-        w, h, l, 0.0, 0.0, 1.0,
-        w,-h, l, 0.0, 0.0, 1.0,
-        -w,-h, l, 0.0, 0.0, 1.0,
-        -w, h, l, 0.0, 0.0, 1.0);  
+        w, h, l, 0.0, 0.0, 1.0, 0.0, 1.0,
+        w,-h, l, 0.0, 0.0, 1.0, 0.0, 0.0,
+        -w,-h, l, 0.0, 0.0, 1.0, 1.0, 0.0,
+        -w, h, l, 0.0, 0.0, 1.0, 1.0, 1.0);  
 
     AddQuad(
-        -w, h, l, 0.0, 1.0, 1.0,
-        -w, -h, l, 0.0, 1.0, 1.0,
-        -w, -h, -l, 0.0, 1.0, 1.0,
-        -w, h, -l, 0.0, 1.0, 1.0);  
+        -w, h, l, 0.0, 1.0, 1.0, 0.0, 1.0,
+        -w, -h, l, 0.0, 1.0, 1.0, 0.0, 0.0,
+        -w, -h, -l, 0.0, 1.0, 1.0, 1.0, 0.0,
+        -w, h, -l, 0.0, 1.0, 1.0 , 1.0, 1.0);
 
     AddQuad(
-        w, -h, l, 0.0, 1.0, 0.0,
-        w, h, l, 0.0, 1.0, 0.0,
-        w, h, -l, 0.0, 1.0, 0.0,
-        w, -h, -l, 0.0, 1.0, 0.0);
+        w, -h, l, 0.0, 1.0, 0.0, 0.0, 1.0,
+        w, h, l, 0.0, 1.0, 0.0, 0.0, 0.0,
+        w, h, -l, 0.0, 1.0, 0.0, 1.0, 0.0,
+        w, -h, -l, 0.0, 1.0, 0.0, 1.0, 1.0);
 
     AddQuad(
-        -w, h, l, 1.0, 1.0, 0.0,
-        -w, h, -l, 1.0, 1.0, 0.0,
-        w, h, -l, 1.0, 1.0, 0.0,
-        w, h, l, 1.0, 1.0, 0.0);
+        -w, h, l, 1.0, 1.0, 0.0,  0.0, 1.0,
+        -w, h, -l, 1.0, 1.0, 0.0, 0.0, 0.0,
+        w, h, -l, 1.0, 1.0, 0.0, 1.0, 0.0,
+        w, h, l, 1.0, 1.0, 0.0,  1.0, 1.0);
     
     AddQuad(
-        -w, -h, l, 1.0, 0.0, 1.0,
-        w, -h, l, 1.0, 0.0, 1.0,
-        w, -h, -l, 1.0, 0.0, 1.0,
-        -w, -h, -l, 1.0, 0.0, 1.0);
+        -w, -h, l, 1.0, 0.0, 1.0, 0.0, 1.0,
+        w, -h, l, 1.0, 0.0, 1.0, 0.0, 0.0,
+        w, -h, -l, 1.0, 0.0, 1.0, 1.0, 0.0,
+        -w, -h, -l, 1.0, 0.0, 1.0, 1.0, 1.0);
 }
 
 function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
@@ -285,16 +287,16 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
             AddQuad(
-                -w + posX , -h + offsetY, -l, bw, bw, bw,
-                -w + posX, -h + posY, -l, bw, bw, bw,
-                -w + offsetX, -h + posY, -l, bw, bw, bw,
-                -w + offsetX, -h + offsetY, -l, bw, bw, bw);     
+                -w + posX , -h + offsetY, -l, bw, bw, bw, 0.0, 1.0,
+                -w + posX, -h + posY, -l, bw, bw, bw, 0.0, 0.0,
+                -w + offsetX, -h + posY, -l, bw, bw, bw, 1.0, 0.0,
+                -w + offsetX, -h + offsetY, -l, bw, bw, bw, 1.0, 1.0);     
             
             AddQuad(
-                w - posX, h - posY, l, bw, bw, bw,
-                w - posX, h - offsetY, l, bw, bw, bw,
-                w - offsetX, h - offsetY, l, bw, bw, bw,
-                w - offsetX, h - posY, l, bw, bw, bw);  
+                w - posX, h - posY, l, bw, bw, bw, 0.0, 1.0,
+                w - posX, h - offsetY, l, bw, bw, bw, 0.0, 0.0,
+                w - offsetX, h - offsetY, l, bw, bw, bw, 1.0, 0.0,
+                w - offsetX, h - posY, l, bw, bw, bw, 1.0, 1.0); 
         }       
     }
     
@@ -307,15 +309,15 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const bw = (i + j) % 2 === 1 ? 1.0 : 0.0;
 
             AddQuad(
-                -w, -h + posY, -l + offsetZ, bw, bw, bw,
-                -w, -h + posY, -l + posZ, bw, bw, bw,
-                -w, -h + offsetY, -l + posZ, bw, bw, bw,
-                -w, -h + offsetY, -l + offsetZ, bw, bw, bw);      
+                -w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 1.0,
+                -w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 0.0, 
+                -w, -h + offsetY, -l + posZ, bw, bw, bw, 1.0, 0.0, 
+                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, 1.0, 1.0);     
             AddQuad(
-                w, -h + posY, -l + posZ, bw, bw, bw,
-                w, -h + posY, -l + offsetZ, bw, bw, bw,
-                w, -h + offsetY, -l + offsetZ, bw, bw, bw,
-                w, -h + offsetY, -l + posZ, bw, bw, bw);  
+                w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 1.0,
+                w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
+                w, -h + offsetY, -l + offsetZ, bw, bw, bw, 1.0, 0.0,
+                w, -h + offsetY, -l + posZ, bw, bw, bw, 1.0, 1.0);
         }       
     }
     
@@ -345,11 +347,12 @@ function CreateGeometryBuffers(program) {
     CreateGeometryUI();
 
     CreateVBO(program, new Float32Array(vertices));
-    
+
     angleGL = gl.getUniformLocation(program, 'Angle');
+    CreateTexture(program, 'img/1812.jpg');
 
     gl.useProgram(program);
-
+    gl.uniform4fv(displayGL, new Float32Array(display));
     Render();
 }
 
@@ -358,7 +361,7 @@ function CreateVBO(program, vert) {
     gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
     gl.bufferData(gl.ARRAY_BUFFER,vert,gl.STATIC_DRAW);
     
-    const s = 6 * Float32Array.BYTES_PER_ELEMENT;
+    const s = 8 * Float32Array.BYTES_PER_ELEMENT;
     let p = gl.getAttribLocation(program,'Pos');
     gl.vertexAttribPointer(p, 3, gl.FLOAT, gl.FALSE, s, 0); 
     gl.enableVertexAttribArray(p);
@@ -367,6 +370,10 @@ function CreateVBO(program, vert) {
     let c = gl.getAttribLocation(program, 'Color');
     gl.vertexAttribPointer(c, 3, gl.FLOAT, gl.FALSE, s, o);
     gl.enableVertexAttribArray(c);
+    const o2 = o * 2;
+    let u = gl.getAttribLocation(program, 'UV');
+    gl.vertexAttribPointer(c, 2, gl.FLOAT, gl.FALSE, s, o2);
+    gl.enableVertexAttribArray(u);
 }
 
 function Render(){
@@ -411,6 +418,15 @@ function CreateGeometryUI() {
         case 2: CreateBox(w, h, l); break;
         case 3: CreateSubdividedBox(w, h, l, divX, divY, divZ); break;
     }
+}
+
+function Update() {
+    // Show texture (boolean) last element
+    const t = document.getElementById('texture');
+    display[3] = t.checked ? 1.0 : 0.0;
+    // Update array to graphics card and render
+    gl.uniform4fv(displayGL, new Float32Array(display));
+    Render();
 }
 
 
