@@ -25,7 +25,6 @@ document.getElementById('gl').addEventListener(
     mouseY = e.y;
 });
 
-
 function InitWebGL() {
     if(!gl) {
         alert('webgl not supported');
