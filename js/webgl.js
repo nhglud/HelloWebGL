@@ -9,7 +9,12 @@ var angle = [ 0.0, 0.0, 0.0, 1.0 ];
 var angleGL = 0;
 
 var textureGL = 0; // Uniform Location
-var display = [ 0.0, 0.0, 0.0, 0.0 ];
+var display = [ 1.0, 1.0, 1.0, 0.0 ];
+const l = document.getElementById('light').value;
+display[0] = parseInt(l.substring(1,3),16) / 255.0;
+display[1] = parseInt(l.substring(3,5),16) / 255.0;
+display[2] = parseInt(l.substring(5,7),16) / 255.0;
+
 var displayGL = 0; 
 
 document.getElementById('gl').addEventListener(
