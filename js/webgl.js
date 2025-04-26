@@ -8,7 +8,7 @@ var mouseX = 0, mouseY = 0;
 var angle = [ 0.0, 0.0, 0.0, 1.0 ];
 var angleGL = 0;
 
-var textureGL = 0; // Uniform Location
+var textureGL = 0; 
 
 var display = [ 1.0, 1.0, 1.0, 0.0 ];
 const l = document.getElementById('light').value;
@@ -175,6 +175,7 @@ function CreateTriangle(width, height) {
     vertices.length = 0;
     const w = width * 0.5;
     const h = height * 0.5;
+
     AddTriangle(
         0.0, h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
         -w, -h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
@@ -187,6 +188,7 @@ function CreateQuad(width, height) {
     vertices.length = 0;
     const w = width * 0.5;
     const h = height * 0.5;
+
     AddQuad(
         -w, h, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0,
         -w,-h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
@@ -335,7 +337,7 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0, 
                 1.0, 0.0, 0.0
             );  
-            
+
             AddQuad(
                 w - posX, h, -l + posZ, bw, bw, bw,        0.0, 1.0, 
                 w - posX, h, -l + offsetZ, bw, bw, bw,     0.0, 0.0,
@@ -374,6 +376,19 @@ function CreateCylinder(width, height) {
             x1,-h, z1, cosPhi1, sinPhi1, 0.0, 0.0, 0.0,
             x2, -h, z2, cosPhi1, sinPhi1, 0.0, 1.0, 0.0,
             x2, h, z2, cosPhi1, sinPhi1, 0.0, 1.0, 1.0,
+            0.0, 0.0, 1.0
+        );
+
+        AddTriangle(
+            0.0, h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
+            x1, h, z1, 0.0, 1.0, 0.0, 0.0, 0.0,
+            x2, h, z2, 0.0, 0.0, 1.0, 1.0, 0.0,
+            0.0, 0.0, 1.0
+        );
+        AddTriangle(
+            0.0, -h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
+            x2, -h, z2, 0.0, 1.0, 0.0, 0.0, 0.0,
+            x1, -h, z1, 0.0, 0.0, 1.0, 1.0, 0.0,
             0.0, 0.0, 1.0
         );
         
