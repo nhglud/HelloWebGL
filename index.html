@@ -22,11 +22,13 @@
                 attribute vec3 Pos;
                 attribute vec3 Color;
                 attribute vec2 UV;
+                attribute vec3 Normal;
                 
                 uniform vec4 Angle;
 
                 varying vec3 vertexColor;
                 varying vec2 uv;
+                varying vec3 normal;
 
                 void main() {
                     float coX = cos(Angle.x);
@@ -50,6 +52,7 @@
                     gl_Position = matY * matX * vec4(Pos, 1.0);
                     vertexColor = Color;
                     uv = UV;
+                    normal = (matY * matX * vec4(Normal, 1.0)).xyz;
                 }
             </textarea>
 
@@ -61,12 +64,17 @@
                 
                 varying vec3 vertexColor;
                 varying vec2 uv;
+                varying vec3 normal;
 
                 void main() {
+                    vec3 lightDirection = vec3(0.0, 0.0, 1.0);
+                    float lambert = dot(lightDirection, normal);
+                    vec3 shade = Display.rgb * lambert;
+
                     float p = abs(Display.w);
                     vec3 texture = texture2D(Texture, uv).rgb;
                     vec3 color = vertexColor;
-                    gl_FragColor = vec4(mix(color, texture, p), 1.0);
+                    gl_FragColor = vec4(mix(color, texture, p) * shade, 1.0);
                 }
             </textarea>
 
@@ -78,7 +86,8 @@
                     <option>Subdivided Box</option>
                 </select>
                 <input type="checkbox" id="t" onchange="Update();">
-                Show Texture<br>
+                Show Texture
+                <input type="color" id="l" value="#f6b73c" onchange="Update ()">Light Color<br>
                 <div id="ui">Generate UI for geometry here!</div>
             </div>
         </section>

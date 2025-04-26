@@ -120,9 +120,9 @@ function ValidateShaderProgram(p) {
     return true;
 }
 
-function AddVertex(x, y, z, r, g, b, u, v) {
+function AddVertex(x, y, z, r, g, b, u, v, nx, ny, nz) {
     const index = vertices.length;
-    vertices.length += 8;
+    vertices.length += 11;
     vertices[index + 0] = x;
     vertices[index + 1] = y;
     vertices[index + 2] = z;
@@ -131,34 +131,37 @@ function AddVertex(x, y, z, r, g, b, u, v) {
     vertices[index + 5] = b;
     vertices[index + 6] = u;
     vertices[index + 7] = v;
+    vertices[index + 8] = nx;
+    vertices[index + 9] = ny;
+    vertices[index + 10] = nz;
 }
 
 function AddTriangle(
     x1, y1, z1, r1, g1, b1, u1, v1,
     x2, y2, z2, r2, g2, b2, u2, v2,
-    x3, y3, z3, r3, g3, b3, u3, v3) {
+    x3, y3, z3, r3, g3, b3, u3, v3, nx, ny, nz) {
     
-    AddVertex(x1, y1, z1, r1, g1, b1, u1, v1);
-    AddVertex(x2, y2, z2, r2, g2, b2, u2, v2);
-    AddVertex(x3, y3, z3, r3, g3, b3, u3, v3);
+    AddVertex(x1, y1, z1, r1, g1, b1, u1, v1, nx, ny, nz);
+    AddVertex(x2, y2, z2, r2, g2, b2, u2, v2, nx, ny, nz);
+    AddVertex(x3, y3, z3, r3, g3, b3, u3, v3, nx, ny, nz);
 }
 
 function AddQuad(
     x1, y1, z1, r1, g1, b1, u1, v1,
     x2, y2, z2, r2, g2, b2, u2, v2,
     x3, y3, z3, r3, g3, b3, u3, v3,
-    x4, y4, z4, r4, g4, b4, u4, v4) {
+    x4, y4, z4, r4, g4, b4, u4, v4, nx, ny, nz) {
 
     AddTriangle(
         x1, y1, z1, r1, g1, b1, u1, v1,
         x2, y2, z2, r2, g2, b2, u2, v2,
-        x3, y3, z3, r3, g3, b3, u3, v3
+        x3, y3, z3, r3, g3, b3, u3, v3, nx, ny, nz 
     );
 
     AddTriangle(
         x3, y3, z3, r3, g3, b3, u3, v3,
         x4, y4, z4, r4, g4, b4, u4, v4,
-        x1, y1, z1, r1, g1, b1, u1, v1
+        x1, y1, z1, r1, g1, b1, u1, v1, nx, ny, nz
     );
 }
 
@@ -169,7 +172,7 @@ function CreateTriangle(width, height) {
     AddTriangle(
         0.0, h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
         -w, -h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
-        w, -h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0);
+        w, -h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
 }
 
 function CreateQuad(width, height) {
@@ -180,7 +183,7 @@ function CreateQuad(width, height) {
         -w, h, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0,
         -w,-h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
         w,-h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0,
-        w, h, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0);
+        w, h, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0);
 }
 
 function CreateBox(width, height, length) {
@@ -193,121 +196,121 @@ function CreateBox(width, height, length) {
         -w, h, -l, 1.0, 0.0, 0.0, 0.0, 1.0,
         -w,-h, -l, 1.0, 0.0, 0.0, 0.0, 0.0,
         w, -h, -l, 1.0, 0.0, 0.0, 1.0, 0.0,
-        w, h, -l, 1.0, 0.0, 0.0, 1.0, 1.0);
+        w, h, -l, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, -1.0);
 
     AddQuad(
         w, h, l, 0.0, 0.0, 1.0,  0.0, 1.0,
         w,-h, l, 0.0, 0.0, 1.0,  0.0, 0.0,
         -w,-h, l, 0.0, 0.0, 1.0, 1.0, 0.0,
-        -w, h, l, 0.0, 0.0, 1.0, 1.0, 1.0);  
+        -w, h, l, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0);  
 
     AddQuad(
         -w, h, l, 0.0, 1.0, 1.0,   0.0, 1.0,
         -w, -h, l, 0.0, 1.0, 1.0,  0.0, 0.0,
         -w, -h, -l, 0.0, 1.0, 1.0, 1.0, 0.0,
-        -w, h, -l, 0.0, 1.0, 1.0,  1.0, 1.0);
+        -w, h, -l, 0.0, 1.0, 1.0,  1.0, 1.0, -1.0, 0.0, 0.0);
 
     AddQuad(
         w, -h, l, 0.0, 1.0, 0.0,  1.0, 0.0,
         w, h, l, 0.0, 1.0, 0.0, 1.0, 1.0,
         w, h, -l, 0.0, 1.0, 0.0, 0.0, 1.0,
-        w, -h, -l, 0.0, 1.0, 0.0, 0.0, 0.0);
+        w, -h, -l, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0);
 
     AddQuad(
         -w, h, l, 1.0, 1.0, 0.0,  0.0, 1.0,
         -w, h, -l, 1.0, 1.0, 0.0, 0.0, 0.0,
         w, h, -l, 1.0, 1.0, 0.0, 1.0, 0.0,
-        w, h, l, 1.0, 1.0, 0.0, 1.0, 1.0);
+        w, h, l, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.0);
     
     AddQuad(
         -w, -h, l, 1.0, 0.0, 1.0, 0.0, 1.0,
         w, -h, l, 1.0, 0.0, 1.0, 0.0, 0.0,
         w, -h, -l, 1.0, 0.0, 1.0, 1.0, 0.0,
-        -w, -h, -l, 1.0, 0.0, 1.0, 1.0, 1.0);
+        -w, -h, -l, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, -1.0, 0.0);
 }
 
-function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
-    vertices.length = 0;
-    const w = width * 0.5;
-    const h = height * 0.5;
-    const l = length * 0.5;
-    const subw = width / divX;
-    const subh = height / divY;
-    const subl = length / divZ;
+// function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
+//     vertices.length = 0;
+//     const w = width * 0.5;
+//     const h = height * 0.5;
+//     const l = length * 0.5;
+//     const subw = width / divX;
+//     const subh = height / divY;
+//     const subl = length / divZ;
     
-    for (let j = 0; j < divY; j++) {
-        for (let i = 0; i < divX; i++) {
-            const posY = j * subh;
-            const posX = i * subw;
-            const offsetX = (i + 1) * subw;
-            const offsetY = (j + 1) * subh;
-            const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
-            const u1 = i / divX;
-            const v1 = j / divY;
-            const u2 = (i + 1) / divX;
-            const v2 = (j + 1) / divY; 
+//     for (let j = 0; j < divY; j++) {
+//         for (let i = 0; i < divX; i++) {
+//             const posY = j * subh;
+//             const posX = i * subw;
+//             const offsetX = (i + 1) * subw;
+//             const offsetY = (j + 1) * subh;
+//             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
+//             const u1 = i / divX;
+//             const v1 = j / divY;
+//             const u2 = (i + 1) / divX;
+//             const v2 = (j + 1) / divY; 
 
-            AddQuad(
-                -w + posX , -h + offsetY, -l, bw, bw, bw, u1, v2,
-                -w + posX, -h + posY, -l, bw, bw, bw, u1, v1,
-                -w + offsetX, -h + posY, -l, bw, bw, bw, u2, v1,
-                -w + offsetX, -h + offsetY, -l, bw, bw, bw, u2, v2);     
+//             AddQuad(
+//                 -w + posX , -h + offsetY, -l, bw, bw, bw, u1, v2,
+//                 -w + posX, -h + posY, -l, bw, bw, bw, u1, v1,
+//                 -w + offsetX, -h + posY, -l, bw, bw, bw, u2, v1,
+//                 -w + offsetX, -h + offsetY, -l, bw, bw, bw, u2, v2);     
             
-            AddQuad(
-                w - posX, h - posY, l, bw, bw, bw,  u1, v2,
-                w - posX, h - offsetY, l, bw, bw, bw,  u1, v1,
-                w - offsetX, h - offsetY, l, bw, bw, bw, u2, v1,
-                w - offsetX, h - posY, l, bw, bw, bw,  u2, v2);
-        }       
-    }
+//             AddQuad(
+//                 w - posX, h - posY, l, bw, bw, bw,  u1, v2,
+//                 w - posX, h - offsetY, l, bw, bw, bw,  u1, v1,
+//                 w - offsetX, h - offsetY, l, bw, bw, bw, u2, v1,
+//                 w - offsetX, h - posY, l, bw, bw, bw,  u2, v2);
+//         }       
+//     }
     
-    for (let j = 0; j < divZ; j++) {
-        for (let i = 0; i < divY; i++) {
-            const posZ = j * subl;
-            const posY = i * subh;
-            const offsetY = (i + 1) * subh;
-            const offsetZ = (j + 1) * subl;
-            const bw = (i + j) % 2 === 1 ? 1.0 : 0.0;
-            const u1 = i / divX;
-            const v1 = j / divY;
-            const u2 = (i + 1) / divX;
-            const v2 = (j + 1) / divY; 
+//     for (let j = 0; j < divZ; j++) {
+//         for (let i = 0; i < divY; i++) {
+//             const posZ = j * subl;
+//             const posY = i * subh;
+//             const offsetY = (i + 1) * subh;
+//             const offsetZ = (j + 1) * subl;
+//             const bw = (i + j) % 2 === 1 ? 1.0 : 0.0;
+//             const u1 = i / divX;
+//             const v1 = j / divY;
+//             const u2 = (i + 1) / divX;
+//             const v2 = (j + 1) / divY; 
 
-            AddQuad(
-                -w, -h + posY, -l + offsetZ, bw, bw, bw, u1, v2,
-                -w, -h + posY, -l + posZ, bw, bw, bw, u1, v1,
-                -w, -h + offsetY, -l + posZ, bw, bw, bw, u2, v1,
-                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, u2, v2);      
-            AddQuad(
-                w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 1.0,
-                w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
-                w, -h + offsetY, -l + offsetZ, bw, bw, bw, 1.0, 0.0,
-                w, -h + offsetY, -l + posZ, bw, bw, bw,   1.0, 1.0);
-        }       
-    }
+//             AddQuad(
+//                 -w, -h + posY, -l + offsetZ, bw, bw, bw, u1, v2,
+//                 -w, -h + posY, -l + posZ, bw, bw, bw, u1, v1,
+//                 -w, -h + offsetY, -l + posZ, bw, bw, bw, u2, v1,
+//                 -w, -h + offsetY, -l + offsetZ, bw, bw, bw, u2, v2);      
+//             AddQuad(
+//                 w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 1.0,
+//                 w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
+//                 w, -h + offsetY, -l + offsetZ, bw, bw, bw, 1.0, 0.0,
+//                 w, -h + offsetY, -l + posZ, bw, bw, bw,   1.0, 1.0);
+//         }       
+//     }
     
 
-    for (let j = 0; j < divZ; j++) {
-        for (let i = 0; i < divX; i++) {
-            const posZ = j * subl;
-            const posX = i * subw;
-            const offsetX = (i + 1) * subw;
-            const offsetZ = (j + 1) * subl;
-            const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
+//     for (let j = 0; j < divZ; j++) {
+//         for (let i = 0; i < divX; i++) {
+//             const posZ = j * subl;
+//             const posX = i * subw;
+//             const offsetX = (i + 1) * subw;
+//             const offsetZ = (j + 1) * subl;
+//             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
-            AddQuad(
-                w - posX, -h, -l + offsetZ, bw, bw, bw, 0.0, 1.0,
-                w - posX, -h, -l + posZ, bw, bw, bw, 0.0, 0.0,
-                w - offsetX, -h, -l + posZ, bw, bw, bw, 1.0, 0.0,
-                w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0);  
-            AddQuad(
-                w - posX, h, -l + posZ, bw, bw, bw,        0.0, 1.0, 
-                w - posX, h, -l + offsetZ, bw, bw, bw,     0.0, 0.0,
-                w - offsetX, h, -l + offsetZ, bw, bw, bw,  1.0, 0.0,
-                w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0);
-        }       
-    }
-}
+//             AddQuad(
+//                 w - posX, -h, -l + offsetZ, bw, bw, bw, 0.0, 1.0,
+//                 w - posX, -h, -l + posZ, bw, bw, bw, 0.0, 0.0,
+//                 w - offsetX, -h, -l + posZ, bw, bw, bw, 1.0, 0.0,
+//                 w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0);  
+//             AddQuad(
+//                 w - posX, h, -l + posZ, bw, bw, bw,        0.0, 1.0, 
+//                 w - posX, h, -l + offsetZ, bw, bw, bw,     0.0, 0.0,
+//                 w - offsetX, h, -l + offsetZ, bw, bw, bw,  1.0, 0.0,
+//                 w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0);
+//         }       
+//     }
+// }
 
 function CreateGeometryBuffers(program) {
     CreateGeometryUI();
@@ -317,11 +320,10 @@ function CreateGeometryBuffers(program) {
     angleGL = gl.getUniformLocation(program, 'Angle');
     CreateTexture(program, '../img/tekstur.jpg');
 
-
     gl.useProgram(program);
     gl.uniform4fv(angleGL, new Float32Array(angle));
     // Update display options
-    gl.uniform4fv(displayGL,new Float32Array(display));
+    gl.uniform4fv(displayGL, new Float32Array(display));
 
     Render();
 }
@@ -329,30 +331,37 @@ function CreateGeometryBuffers(program) {
 function CreateVBO(program, vert) {
     let vbo = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-    gl.bufferData(gl.ARRAY_BUFFER,vert,gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, vert, gl.STATIC_DRAW);
     
-    const s = 8 * Float32Array.BYTES_PER_ELEMENT;
-    let p = gl.getAttribLocation(program,'Pos');
+    // Position
+    const s = 11 * Float32Array.BYTES_PER_ELEMENT;
+    let p = gl.getAttribLocation(program, 'Pos');
     gl.vertexAttribPointer(p, 3, gl.FLOAT, gl.FALSE, s, 0); 
     gl.enableVertexAttribArray(p);
 
-    const o = 3 * Float32Array.BYTES_PER_ELEMENT;
+    // Color
+    const offset = 3 * Float32Array.BYTES_PER_ELEMENT;
     let c = gl.getAttribLocation(program, 'Color');
-    gl.vertexAttribPointer(c, 3, gl.FLOAT, gl.FALSE, s, o);
+    gl.vertexAttribPointer(c, 3, gl.FLOAT, gl.FALSE, s, offset);
     gl.enableVertexAttribArray(c);
 
     // Create shader attribute: UV
-    const o2 = o * 2;
+    const offset2 = offset * 2;
     let u = gl.getAttribLocation(program, 'UV');
-    gl.vertexAttribPointer(u,2,gl.FLOAT,gl.FALSE,s,o2);
+    gl.vertexAttribPointer(u, 2, gl.FLOAT, gl.FALSE, s, offset2);
     gl.enableVertexAttribArray(u);
 
+    // Create shader attribute Normal
+    const offset3 = offset2  + 2 * Float32Array.BYTES_PER_ELEMENT;
+    let n = gl.getAttribLocation(program, 'Normal');
+    gl.vertexAttribPointer(n, 3, gl.FLOAT, gl.FALSE, s, offset3);
+    gl.enableVertexAttribArray(n);
 }
 
 function Render(){
     gl.clearColor(0.0, 0.4, 0.6, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 8);
+    gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 11);
 }
 
 function CreateGeometryUI() {
@@ -389,7 +398,7 @@ function CreateGeometryUI() {
         case 0: CreateTriangle(w, h); break;
         case 1: CreateQuad(w, h); break;
         case 2: CreateBox(w, h, l); break;
-        case 3: CreateSubdividedBox(w, h, l, divX, divY, divZ); break;
+        case 3: /*CreateSubdividedBox(w, h, l, divX, divY, divZ)*/; break;
     }
 }
 
@@ -449,6 +458,12 @@ function Update()   {
     // Show texture (boolean) last element
     const t = document.getElementById('t');
     display[3] = t.checked ? 1.0 : 0.0;
+
+    const l = document.getElementById('l').value;
+    display[0] = parseInt(l.substring(1,3),16) / 255.0;
+    display[1] = parseInt(l.substring(3,5),16) / 255.0;
+    display[2] = parseInt(l.substring(5,7),16) / 255.0;
+
     // Update array to graphics card and render
     gl.uniform4fv(displayGL,new Float32Array(display));
     Render();
