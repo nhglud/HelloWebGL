@@ -145,7 +145,8 @@ function AddVertex(x, y, z, r, g, b, u, v, nx, ny, nz) {
 function AddTriangle(
     x1, y1, z1, r1, g1, b1, u1, v1,
     x2, y2, z2, r2, g2, b2, u2, v2,
-    x3, y3, z3, r3, g3, b3, u3, v3, nx, ny, nz) {
+    x3, y3, z3, r3, g3, b3, u3, v3, 
+    nx, ny, nz) {
     
     AddVertex(x1, y1, z1, r1, g1, b1, u1, v1, nx, ny, nz);
     AddVertex(x2, y2, z2, r2, g2, b2, u2, v2, nx, ny, nz);
@@ -156,18 +157,21 @@ function AddQuad(
     x1, y1, z1, r1, g1, b1, u1, v1,
     x2, y2, z2, r2, g2, b2, u2, v2,
     x3, y3, z3, r3, g3, b3, u3, v3,
-    x4, y4, z4, r4, g4, b4, u4, v4, nx, ny, nz) {
+    x4, y4, z4, r4, g4, b4, u4, v4, 
+    nx, ny, nz) {
 
     AddTriangle(
         x1, y1, z1, r1, g1, b1, u1, v1,
         x2, y2, z2, r2, g2, b2, u2, v2,
-        x3, y3, z3, r3, g3, b3, u3, v3, nx, ny, nz 
+        x3, y3, z3, r3, g3, b3, u3, v3, 
+        nx, ny, nz 
     );
 
     AddTriangle(
         x3, y3, z3, r3, g3, b3, u3, v3,
         x4, y4, z4, r4, g4, b4, u4, v4,
-        x1, y1, z1, r1, g1, b1, u1, v1, nx, ny, nz
+        x1, y1, z1, r1, g1, b1, u1, v1, 
+        nx, ny, nz
     );
 }
 
@@ -335,7 +339,7 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 w - posX, -h, -l + posZ, bw, bw, bw, 0.0, 0.0,
                 w - offsetX, -h, -l + posZ, bw, bw, bw, 1.0, 0.0,
                 w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0, 
-                -1.0, 0.0, 0.0
+                0.0, 1.0, 0.0
             );  
 
             AddQuad(
@@ -343,7 +347,7 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 w - posX, h, -l + offsetZ, bw, bw, bw,     0.0, 0.0,
                 w - offsetX, h, -l + offsetZ, bw, bw, bw,  1.0, 0.0,
                 w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0, 
-                1.0, 0.0, 0.0
+                0.0, -1.0, 0.0
             );
         }       
     }
@@ -373,13 +377,13 @@ function CreateCylinder(width, height, resolution) {
         
         // calculate face normal with cross product n = a x b
          
-        let ax = 0;
-        let ay = 2 * h;
-        let az = 0;
+        const ax = 0;
+        const ay = 2 * h;
+        const az = 0;
 
-        let bx = x2 - x1;
-        let by = 2 * h;
-        let bz = z2 - z1;
+        const bx = x2 - x1;
+        const by = 2 * h;
+        const bz = z2 - z1;
 
         let nx = ay * bz - az * by;
         let ny = az * bx - ax * bz;
