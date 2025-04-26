@@ -335,7 +335,7 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 w - posX, -h, -l + posZ, bw, bw, bw, 0.0, 0.0,
                 w - offsetX, -h, -l + posZ, bw, bw, bw, 1.0, 0.0,
                 w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0, 
-                1.0, 0.0, 0.0
+                -1.0, 0.0, 0.0
             );  
 
             AddQuad(
@@ -343,21 +343,21 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 w - posX, h, -l + offsetZ, bw, bw, bw,     0.0, 0.0,
                 w - offsetX, h, -l + offsetZ, bw, bw, bw,  1.0, 0.0,
                 w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0, 
-                -1.0, 0.0, 0.0
+                1.0, 0.0, 0.0
             );
         }       
     }
 }
 
-function CreateCylinder(width, height) {
+function CreateCylinder(width, height, resolution) {
     vertices.length = 0;
-    const res = 10;
+    // const res = 8;
     const h = height * 0.5;
-    const deltaPhi = 2 * Math.PI / res;
+    const deltaPhi = 2 * Math.PI / resolution;
     const x = 0;
     const z = -width * 0.5;
     
-    for(let i = 0; i < res; i++) {
+    for(let i = 0; i < resolution; i++) {
         const phi1 = i * deltaPhi;
         const phi2 = (i + 1) * deltaPhi;
 
@@ -369,8 +369,8 @@ function CreateCylinder(width, height) {
         const x1 = cosPhi1 * x + sinPhi1 * z;
         const z1 = -sinPhi1 * x + cosPhi1 * z;
         const x2 = cosPhi2 * x + sinPhi2 * z;
-        const z2 = -sinPhi2 * x + cosPhi2 * z;
-
+        const z2 = -sinPhi2 * x + cosPhi2 * z;    
+        // TODO calculate normals
         AddQuad(
             x1, h, z1, cosPhi1, sinPhi1, 0.0, 0.0, 1.0,
             x1,-h, z1, cosPhi1, sinPhi1, 0.0, 0.0, 0.0,
@@ -385,13 +385,13 @@ function CreateCylinder(width, height) {
             x2, h, z2, 0.0, 0.0, 1.0, 1.0, 0.0,
             0.0, 0.0, 1.0
         );
+
         AddTriangle(
             0.0, -h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
             x2, -h, z2, 0.0, 1.0, 0.0, 0.0, 0.0,
             x1, -h, z1, 0.0, 0.0, 1.0, 1.0, 0.0,
             0.0, 0.0, 1.0
         );
-        
     } 
 }
 
@@ -454,6 +454,7 @@ function CreateGeometryUI() {
     const ex = document.getElementById('div-x');
     const ey = document.getElementById('div-y');
     const ez = document.getElementById('div-z');
+    const cr = document.getElementById('cylinder-res');
 
     const w = ew ? ew.value : 0.5;
     const h = eh ? eh.value : 0.5;
@@ -461,6 +462,7 @@ function CreateGeometryUI() {
     const divX = ex ? ex.value : 4;
     const divY = ey ? ey.value : 4;
     const divZ = ez ? ez.value : 4;
+    const cRes = ez ? cr.value : 8;
 
     document.getElementById('ui').innerHTML =
         'Width: <input type="number" id="w" value="' + w +
@@ -474,6 +476,8 @@ function CreateGeometryUI() {
         'Div Y: <input type="number" id="div-y" value="' + divY +
         '" onchange="InitShaders();">' +
         'Div Z: <input type="number" id="div-z" value="' + divZ +
+        '" onchange="InitShaders();">' +
+        'Cylinder Resolution: <input type="number" id="cylinder-res" value="' + cRes +
         '" onchange="InitShaders();">';
 
     let e = document.getElementById('shape');
@@ -482,7 +486,7 @@ function CreateGeometryUI() {
         case 1: CreateQuad(w, h); break;
         case 2: CreateBox(w, h, l); break;
         case 3: CreateSubdividedBox(w, h, l, divX, divY, divZ); break;
-        case 4: CreateCylinder(w, h); break;
+        case 4: CreateCylinder(w, h, cRes); break;
     }
 }
 
