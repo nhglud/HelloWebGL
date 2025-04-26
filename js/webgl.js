@@ -9,6 +9,7 @@ var angle = [ 0.0, 0.0, 0.0, 1.0 ];
 var angleGL = 0;
 
 var textureGL = 0; // Uniform Location
+
 var display = [ 1.0, 1.0, 1.0, 0.0 ];
 const l = document.getElementById('light').value;
 display[0] = parseInt(l.substring(1,3),16) / 255.0;
@@ -294,7 +295,6 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
         }       
     }
     
-
     for (let j = 0; j < divZ; j++) {
         for (let i = 0; i < divX; i++) {
             const posZ = j * subl;
@@ -315,6 +315,39 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0, -1.0, 0.0, 0.0);
         }       
     }
+}
+
+function CreateCylinder(radius, height) {
+    vertices.length = 0;
+    const res = 6;
+    const h = height * 0.5;
+    let x = 0;
+    let z = -radius;
+
+    let phi1 = 0;
+    const deltaPhi = 2 * Math.PI / res;
+    for(let i = 0; i < res; i++) {
+        
+        phi1 = i * deltaPhi;
+        phi2 = (i + 1) * deltaPhi;
+        
+        let cosPhi1 = Math.cos(phi1);
+        let sinPhi1 = Math.sin(phi1);
+        let cosPhi2 = Math.cos(phi2);
+        let sinPhi2 = Math.sin(phi2);
+
+        x1 = cosPhi1 * x + sinPhi1 * z;
+        z1 = -sinPhi1 * x + cosPhi1 * z;
+        x2 = cosPhi2 * x + sinPhi2 * z;
+        z2 = -sinPhi2 * x + cosPhi2 * z;
+
+        AddQuad(
+            x1, h, z1, 1.0, 0.0, 0.0, 0.0, 1.0,
+            x1,-h, z1, 1.0, 0.0, 0.0, 0.0, 0.0,
+            x2, -h, z2, 1.0, 0.0, 0.0, 1.0, 0.0,
+            x2, h, z2, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0);
+        
+    } 
 }
 
 function CreateGeometryBuffers(program) {
@@ -404,6 +437,7 @@ function CreateGeometryUI() {
         case 1: CreateQuad(w, h); break;
         case 2: CreateBox(w, h, l); break;
         case 3: CreateSubdividedBox(w, h, l, divX, divY, divZ); break;
+        case 4: CreateCylinder(w, h); break;
     }
 }
 
