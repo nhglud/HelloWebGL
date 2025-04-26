@@ -178,7 +178,9 @@ function CreateTriangle(width, height) {
     AddTriangle(
         0.0, h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
         -w, -h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
-        w, -h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+        w, -h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0,
+        0.0, 0.0, 1.0
+    );
 }
 
 function CreateQuad(width, height) {
@@ -189,7 +191,9 @@ function CreateQuad(width, height) {
         -w, h, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0,
         -w,-h, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
         w,-h, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0,
-        w, h, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0);
+        w, h, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 
+        0.0, 0.0, 1.0
+    );
 }
 
 function CreateBox(width, height, length) {
@@ -202,37 +206,49 @@ function CreateBox(width, height, length) {
         -w, h, -l, 1.0, 0.0, 0.0, 0.0, 1.0,
         -w,-h, -l, 1.0, 0.0, 0.0, 0.0, 0.0,
         w, -h, -l, 1.0, 0.0, 0.0, 1.0, 0.0,
-        w, h, -l, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0);
+        w, h, -l, 1.0, 0.0, 0.0, 1.0, 1.0, 
+        0.0, 0.0, 1.0
+    );
 
     AddQuad(
         w, h, l, 0.0, 0.0, 1.0,  0.0, 1.0,
         w,-h, l, 0.0, 0.0, 1.0,  0.0, 0.0,
         -w,-h, l, 0.0, 0.0, 1.0, 1.0, 0.0,
-        -w, h, l, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, -1.0);  
+        -w, h, l, 0.0, 0.0, 1.0, 1.0, 1.0, 
+        0.0, 0.0, -1.0
+    );  
 
     AddQuad(
         -w, h, l, 0.0, 1.0, 1.0,   0.0, 1.0,
         -w, -h, l, 0.0, 1.0, 1.0,  0.0, 0.0,
         -w, -h, -l, 0.0, 1.0, 1.0, 1.0, 0.0,
-        -w, h, -l, 0.0, 1.0, 1.0,  1.0, 1.0, 1.0, 0.0, 0.0);
+        -w, h, -l, 0.0, 1.0, 1.0,  1.0, 1.0, 
+        1.0, 0.0, 0.0
+    );
 
     AddQuad(
         w, -h, l, 0.0, 1.0, 0.0,  1.0, 0.0,
         w, h, l, 0.0, 1.0, 0.0, 1.0, 1.0,
         w, h, -l, 0.0, 1.0, 0.0, 0.0, 1.0,
-        w, -h, -l, 0.0, 1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0);
+        w, -h, -l, 0.0, 1.0, 0.0, 0.0, 0.0, 
+        -1.0, 0.0, 0.0
+    );
 
     AddQuad(
         -w, h, l, 1.0, 1.0, 0.0,  0.0, 1.0,
         -w, h, -l, 1.0, 1.0, 0.0, 0.0, 0.0,
         w, h, -l, 1.0, 1.0, 0.0, 1.0, 0.0,
-        w, h, l, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, -1.0, 0.0);
+        w, h, l, 1.0, 1.0, 0.0, 1.0, 1.0,
+        0.0, -1.0, 0.0
+    );
     
     AddQuad(
         -w, -h, l, 1.0, 0.0, 1.0, 0.0, 1.0,
         w, -h, l, 1.0, 0.0, 1.0, 0.0, 0.0,
         w, -h, -l, 1.0, 0.0, 1.0, 1.0, 0.0,
-        -w, -h, -l, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.0, 0.0);
+        -w, -h, -l, 1.0, 0.0, 1.0, 1.0, 1.0, 
+        0.0, 1.0, 0.0
+    );
 }
 
 function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
@@ -260,13 +276,17 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 -w + posX , -h + offsetY, -l, bw, bw, bw, u1, v2,
                 -w + posX, -h + posY, -l, bw, bw, bw, u1, v1,
                 -w + offsetX, -h + posY, -l, bw, bw, bw, u2, v1,
-                -w + offsetX, -h + offsetY, -l, bw, bw, bw, u2, v2, 0.0, 0.0, 1.0);     
+                -w + offsetX, -h + offsetY, -l, bw, bw, bw, u2, v2, 
+                0.0, 0.0, 1.0
+            );     
             
             AddQuad(
                 w - posX, h - posY, l, bw, bw, bw,  u1, v2,
                 w - posX, h - offsetY, l, bw, bw, bw,  u1, v1,
                 w - offsetX, h - offsetY, l, bw, bw, bw, u2, v1,
-                w - offsetX, h - posY, l, bw, bw, bw,  u2, v2, 0.0, 0.0, -1.0);
+                w - offsetX, h - posY, l, bw, bw, bw,  u2, v2, 
+                0.0, 0.0, -1.0
+            );
         }       
     }
     
@@ -286,12 +306,17 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 -w, -h + posY, -l + offsetZ, bw, bw, bw, u1, v2,
                 -w, -h + posY, -l + posZ, bw, bw, bw, u1, v1,
                 -w, -h + offsetY, -l + posZ, bw, bw, bw, u2, v1,
-                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, u2, v2, 1.0, 0.0, 0.0);      
+                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, u2, v2, 
+                1.0, 0.0, 0.0
+            );      
+
             AddQuad(
                 w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 1.0,
                 w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
                 w, -h + offsetY, -l + offsetZ, bw, bw, bw, 1.0, 0.0,
-                w, -h + offsetY, -l + posZ, bw, bw, bw,   1.0, 1.0, -1.0, 0.0, 0.0);
+                w, -h + offsetY, -l + posZ, bw, bw, bw,   1.0, 1.0, 
+                -1.0, 0.0, 0.0
+            );
         }       
     }
     
@@ -307,45 +332,50 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
                 w - posX, -h, -l + offsetZ, bw, bw, bw, 0.0, 1.0,
                 w - posX, -h, -l + posZ, bw, bw, bw, 0.0, 0.0,
                 w - offsetX, -h, -l + posZ, bw, bw, bw, 1.0, 0.0,
-                w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0, 1.0, 0.0, 0.0);  
+                w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0, 
+                1.0, 0.0, 0.0
+            );  
+            
             AddQuad(
                 w - posX, h, -l + posZ, bw, bw, bw,        0.0, 1.0, 
                 w - posX, h, -l + offsetZ, bw, bw, bw,     0.0, 0.0,
                 w - offsetX, h, -l + offsetZ, bw, bw, bw,  1.0, 0.0,
-                w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0, -1.0, 0.0, 0.0);
+                w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0, 
+                -1.0, 0.0, 0.0
+            );
         }       
     }
 }
 
-function CreateCylinder(radius, height) {
+function CreateCylinder(width, height) {
     vertices.length = 0;
-    const res = 6;
+    const res = 10;
     const h = height * 0.5;
-    let x = 0;
-    let z = -radius;
-
-    let phi1 = 0;
     const deltaPhi = 2 * Math.PI / res;
+    const x = 0;
+    const z = -width * 0.5;
+    
     for(let i = 0; i < res; i++) {
-        
-        phi1 = i * deltaPhi;
-        phi2 = (i + 1) * deltaPhi;
-        
-        let cosPhi1 = Math.cos(phi1);
-        let sinPhi1 = Math.sin(phi1);
-        let cosPhi2 = Math.cos(phi2);
-        let sinPhi2 = Math.sin(phi2);
+        const phi1 = i * deltaPhi;
+        const phi2 = (i + 1) * deltaPhi;
 
-        x1 = cosPhi1 * x + sinPhi1 * z;
-        z1 = -sinPhi1 * x + cosPhi1 * z;
-        x2 = cosPhi2 * x + sinPhi2 * z;
-        z2 = -sinPhi2 * x + cosPhi2 * z;
+        const cosPhi1 = Math.cos(phi1);
+        const sinPhi1 = Math.sin(phi1);
+        const cosPhi2 = Math.cos(phi2);
+        const sinPhi2 = Math.sin(phi2);
+        
+        const x1 = cosPhi1 * x + sinPhi1 * z;
+        const z1 = -sinPhi1 * x + cosPhi1 * z;
+        const x2 = cosPhi2 * x + sinPhi2 * z;
+        const z2 = -sinPhi2 * x + cosPhi2 * z;
 
         AddQuad(
-            x1, h, z1, 1.0, 0.0, 0.0, 0.0, 1.0,
-            x1,-h, z1, 1.0, 0.0, 0.0, 0.0, 0.0,
-            x2, -h, z2, 1.0, 0.0, 0.0, 1.0, 0.0,
-            x2, h, z2, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0);
+            x1, h, z1, cosPhi1, sinPhi1, 0.0, 0.0, 1.0,
+            x1,-h, z1, cosPhi1, sinPhi1, 0.0, 0.0, 0.0,
+            x2, -h, z2, cosPhi1, sinPhi1, 0.0, 1.0, 0.0,
+            x2, h, z2, cosPhi1, sinPhi1, 0.0, 1.0, 1.0,
+            0.0, 0.0, 1.0
+        );
         
     } 
 }
