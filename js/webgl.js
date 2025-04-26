@@ -370,27 +370,47 @@ function CreateCylinder(width, height, resolution) {
         const z1 = -sinPhi1 * x + cosPhi1 * z;
         const x2 = cosPhi2 * x + sinPhi2 * z;
         const z2 = -sinPhi2 * x + cosPhi2 * z;    
-        // TODO calculate normals
+        
+        // calculate face normal with cross product n = a x b
+         
+        let ax = 0;
+        let ay = 2 * h;
+        let az = 0;
+
+        let bx = x2 - x1;
+        let by = 2 * h;
+        let bz = z2 - z1;
+
+        let nx = ay * bz - az * by;
+        let ny = az * bx - ax * bz;
+        let nz = ax * by - ay * bx;
+        
+        let norm = 1 / Math.sqrt(nx * nx + ny * ny + nz * nz);
+        
+        nx *= norm;
+        ny *= norm;
+        nz *= norm;
+
         AddQuad(
-            x1, h, z1, cosPhi1, sinPhi1, 0.0, 0.0, 1.0,
-            x1,-h, z1, cosPhi1, sinPhi1, 0.0, 0.0, 0.0,
-            x2, -h, z2, cosPhi1, sinPhi1, 0.0, 1.0, 0.0,
-            x2, h, z2, cosPhi1, sinPhi1, 0.0, 1.0, 1.0,
-            0.0, 0.0, 1.0
+            x1, h, z1, nx, ny, nz, 0.0, 1.0,
+            x1,-h, z1, nx, ny, nz, 0.0, 0.0,
+            x2, -h, z2, nx, ny, nz, 1.0, 0.0,
+            x2, h, z2, nx, ny, nz, 1.0, 1.0,
+            nx, ny, nz
         );
 
         AddTriangle(
-            0.0, h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
-            x1, h, z1, 0.0, 1.0, 0.0, 0.0, 0.0,
-            x2, h, z2, 0.0, 0.0, 1.0, 1.0, 0.0,
-            0.0, 0.0, 1.0
+            0.0, h, 0.0, 0.0, 1.0, 0.0, 0.5, 1.0,
+            x1, h, z1, 0.0, 0.0, 1.0, 0.0, 0.0,
+            x2, h, z2, 0.0, 0.0, 1.0, 0.0, 0.0,
+            0.0, 1.0, 0.0
         );
 
         AddTriangle(
-            0.0, -h, 0.0, 1.0, 0.0, 0.0, 0.5, 1.0,
-            x2, -h, z2, 0.0, 1.0, 0.0, 0.0, 0.0,
-            x1, -h, z1, 0.0, 0.0, 1.0, 1.0, 0.0,
-            0.0, 0.0, 1.0
+            0.0, -h, 0.0, cosPhi1, sinPhi1, 1.0, 0.5, 1.0,
+            x2, -h, z2, 0.0, cosPhi1, sinPhi1, 1.0, 0.0,
+            x1, -h, z1, 0.0, cosPhi1, sinPhi1, 1.0, 0.0,
+            0.0, -1.0, 0.0
         );
     } 
 }
