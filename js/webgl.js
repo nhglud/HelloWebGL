@@ -369,10 +369,10 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             );  
 
             AddQuad(
-                w - posX, h, -l + offsetZ, bw, bw, bw,        0.0, 1.0, 
-                w - posX, h, -l + posZ, bw, bw, bw,     0.0, 0.0,
+                w - posX, h, -l + offsetZ, bw, bw, bw, 0.0, 1.0, 
+                w - posX, h, -l + posZ, bw, bw, bw, 0.0, 0.0,
                 w - offsetX, h, -l + posZ, bw, bw, bw,  1.0, 0.0,
-                w - offsetX, h, -l + offsetZ, bw, bw, bw,     1.0, 1.0, 
+                w - offsetX, h, -l + offsetZ, bw, bw, bw, 1.0, 1.0, 
                 0.0, 1.0, 0.0
             );
         }       
@@ -415,17 +415,17 @@ function CreateCylinder(width, height, resolution) {
         let ny = az * bx - ax * bz;
         let nz = ax * by - ay * bx;
         
-        let norm = 1 / Math.sqrt(nx * nx + ny * ny + nz * nz);
+        let norm = -1 / Math.sqrt(nx * nx + ny * ny + nz * nz);
         
         nx *= norm;
         ny *= norm;
         nz *= norm;
 
         AddQuad(
-            x1, h, z1, nx, ny, nz, 0.0, 1.0,
-            x1,-h, z1, nx, ny, nz, 0.0, 0.0,
-            x2, -h, z2, nx, ny, nz, 1.0, 0.0,
-            x2, h, z2, nx, ny, nz, 1.0, 1.0,
+            x1, h, z1, 0.0, 1.0, 1.0, 0.0, 1.0,
+            x1,-h, z1, 0.0, 1.0, 1.0, 0.0, 0.0,
+            x2, -h, z2, 0.0, 1.0, 1.0, 1.0, 0.0,
+            x2, h, z2, 0.0, 1.0, 1.0, 1.0, 1.0,
             nx, ny, nz
         );
 
@@ -437,9 +437,9 @@ function CreateCylinder(width, height, resolution) {
         );
 
         AddTriangle(
-            0.0, -h, 0.0, cosPhi1, sinPhi1, 1.0, 0.5, 1.0,
-            x2, -h, z2, 0.0, cosPhi1, sinPhi1, 1.0, 0.0,
-            x1, -h, z1, 0.0, cosPhi1, sinPhi1, 1.0, 0.0,
+            0.0, -h, 0.0, 1.0, 1.0, 1.0, 0.5, 1.0,
+            x2, -h, z2, 0.0, 1.0, 1.0, 1.0, 0.0,
+            x1, -h, z1, 0.0, 1.0, 1.0, 1.0, 0.0,
             0.0, -1.0, 0.0
         );
     } 
@@ -639,7 +639,6 @@ function Perspective(fovy, aspect, near, far) {
 
     gl.uniformMatrix4fv(proGL, false, new Float32Array(projection));
     gl.uniformMatrix4fv(modGL, false, new Float32Array(modelView));
-
 }
 
 
