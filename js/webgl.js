@@ -517,9 +517,9 @@ function CreateGeometryUI() {
     const ez = document.getElementById('div-z');
     const cr = document.getElementById('cylinder-res');
 
-    const w = ew ? ew.value : 0.5;
-    const h = eh ? eh.value : 0.5;
-    const l = el ? el.value : 0.5;
+    const w = ew ? ew.value : 1;
+    const h = eh ? eh.value : 1;
+    const l = el ? el.value : 1;
     const divX = ex ? ex.value : 4;
     const divY = ey ? ey.value : 4;
     const divZ = ez ? ez.value : 4;

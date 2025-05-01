@@ -91,12 +91,14 @@
                     <option>Subdivided Box</option>
                     <option>Cylinder</option>
                 </select>
-                <input type="checkbox" id="t" onchange="Update();">
                 Show Texture
-                <input type="color" id="light" value="#f6b73c" onchange="Update();">
+                <input type="checkbox" id="t" onchange="Update();">
                 Light Color<br>
-                <input type="number"id="fov"value="90"onchange="Render();">FOV<br>
-                <input type="number"id="zoom"value="1.2"onchange="Render();">ZOOM <br>
+                <input type="color" id="light" value="#FFFFFF" onchange="Update();">
+                FOV<br>
+                <input type="number"id="fov"value="90"onchange="Render();">
+                ZOOM <br>
+                <input type="number"id="zoom"value="1.2"onchange="Render();">
                 <div id="ui">Generate UI for geometry here!</div>
             </div>
         </section>
