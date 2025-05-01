@@ -56,20 +56,10 @@
 
                     mat4 rot = matY * matX;
 
-                    float coZ = cos(Pos.y + 0.5);
-                    float siZ = sin(Pos.y + 0.5);
-                    
-                    mat4 bend = mat4(
-                        vec4( coZ, siZ, 0.0, 0.0),
-                        vec4(-siZ, coX, 0.0, 0.0),
-                        vec4( 0.0, 0.0, 1.0, 0.0),
-                        vec4( 0.0, 0.0, 0.0, 1.0)
-                    );
-
-                    gl_Position = Projection * ModelView * rot * bend * vec4(Pos, 1.0);
+                    gl_Position = Projection * ModelView * rot * vec4(Pos, 1.0);
                     vertexColor = Color;
                     uv = UV;
-                    normal = (rot * bend *  vec4(Normal, 1.0)).xyz;
+                    normal = (rot * vec4(Normal, 1.0)).xyz;
                 }
             </textarea>
 

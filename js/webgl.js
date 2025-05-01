@@ -642,6 +642,3 @@ function Perspective(fovy, aspect, near, far) {
 }
 
 
-
-
-
