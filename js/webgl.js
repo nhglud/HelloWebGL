@@ -305,19 +305,19 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const v2 = (j + 1) / divY; 
 
             AddQuad(
-                -w + posX , -h + offsetY, -l, bw, bw, bw, u1, v2,
-                -w + posX, -h + posY, -l, bw, bw, bw, u1, v1,
-                -w + offsetX, -h + posY, -l, bw, bw, bw, u2, v1,
-                -w + offsetX, -h + offsetY, -l, bw, bw, bw, u2, v2, 
-                0.0, 0.0, 1.0
+                -w + posX , -h + posY, -l, bw, bw, bw, u1, v2,
+                -w + posX, -h + offsetY, -l, bw, bw, bw, u1, v1,
+                -w + offsetX, -h + offsetY, -l, bw, bw, bw, u2, v1,
+                -w + offsetX, -h + posY, -l, bw, bw, bw, u2, v2, 
+                0.0, 0.0, -1.0
             );     
             
             AddQuad(
-                w - posX, h - posY, l, bw, bw, bw,  u1, v2,
-                w - posX, h - offsetY, l, bw, bw, bw,  u1, v1,
-                w - offsetX, h - offsetY, l, bw, bw, bw, u2, v1,
-                w - offsetX, h - posY, l, bw, bw, bw,  u2, v2, 
-                0.0, 0.0, -1.0
+                w - posX, h - offsetY, l, bw, bw, bw,  u1, v2,
+                w - posX, h - posY, l, bw, bw, bw,  u1, v1,
+                w - offsetX, h - posY, l, bw, bw, bw, u2, v1,
+                w - offsetX, h - offsetY, l, bw, bw, bw,  u2, v2, 
+                0.0, 0.0, 1.0
             );
         }       
     }
@@ -335,19 +335,19 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const v2 = (j + 1) / divY; 
 
             AddQuad(
-                -w, -h + posY, -l + offsetZ, bw, bw, bw, u1, v2,
-                -w, -h + posY, -l + posZ, bw, bw, bw, u1, v1,
-                -w, -h + offsetY, -l + posZ, bw, bw, bw, u2, v1,
-                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, u2, v2, 
-                1.0, 0.0, 0.0
+                -w, -h + posY, -l + posZ, bw, bw, bw, u1, v2,
+                -w, -h + posY, -l + offsetZ, bw, bw, bw, u1, v1,
+                -w, -h + offsetY, -l + offsetZ, bw, bw, bw, u2, v1,
+                -w, -h + offsetY, -l + posZ, bw, bw, bw, u2, v2, 
+                -1.0, 0.0, 0.0
             );      
 
             AddQuad(
-                w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 1.0,
-                w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
-                w, -h + offsetY, -l + offsetZ, bw, bw, bw, 1.0, 0.0,
-                w, -h + offsetY, -l + posZ, bw, bw, bw,   1.0, 1.0, 
-                -1.0, 0.0, 0.0
+                w, -h + posY, -l + offsetZ, bw, bw, bw, 0.0, 1.0,
+                w, -h + posY, -l + posZ, bw, bw, bw, 0.0, 0.0,
+                w, -h + offsetY, -l + posZ, bw, bw, bw, 1.0, 0.0,
+                w, -h + offsetY, -l + offsetZ, bw, bw, bw,   1.0, 1.0, 
+                1.0, 0.0, 0.0
             );
         }       
     }
@@ -361,19 +361,19 @@ function CreateSubdividedBox(width, height, length, divX, divY, divZ) {
             const bw = (i + j) % 2 === 0 ? 1.0 : 0.0;
 
             AddQuad(
-                w - posX, -h, -l + offsetZ, bw, bw, bw, 0.0, 1.0,
-                w - posX, -h, -l + posZ, bw, bw, bw, 0.0, 0.0,
-                w - offsetX, -h, -l + posZ, bw, bw, bw, 1.0, 0.0,
-                w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 1.0, 
-                0.0, 1.0, 0.0
+                w - posX, -h, -l + posZ, bw, bw, bw, 0.0, 1.0,
+                w - posX, -h, -l + offsetZ, bw, bw, bw, 0.0, 0.0,
+                w - offsetX, -h, -l + offsetZ, bw, bw, bw, 1.0, 0.0,
+                w - offsetX, -h, -l + posZ, bw, bw, bw, 1.0, 1.0, 
+                0.0, -1.0, 0.0
             );  
 
             AddQuad(
-                w - posX, h, -l + posZ, bw, bw, bw,        0.0, 1.0, 
-                w - posX, h, -l + offsetZ, bw, bw, bw,     0.0, 0.0,
-                w - offsetX, h, -l + offsetZ, bw, bw, bw,  1.0, 0.0,
-                w - offsetX, h, -l + posZ, bw, bw, bw,     1.0, 1.0, 
-                0.0, -1.0, 0.0
+                w - posX, h, -l + offsetZ, bw, bw, bw,        0.0, 1.0, 
+                w - posX, h, -l + posZ, bw, bw, bw,     0.0, 0.0,
+                w - offsetX, h, -l + posZ, bw, bw, bw,  1.0, 0.0,
+                w - offsetX, h, -l + offsetZ, bw, bw, bw,     1.0, 1.0, 
+                0.0, 1.0, 0.0
             );
         }       
     }
