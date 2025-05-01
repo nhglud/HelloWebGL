@@ -54,10 +54,12 @@
                         vec4(0.0, 0.0, 0.0, 1.0)
                     );
 
-                    gl_Position = Projection * ModelView * matY * matX * vec4(Pos, 1.0);
+                    mat4 rot = matY * matX;
+
+                    gl_Position = Projection * ModelView * rot * vec4(Pos, 1.0);
                     vertexColor = Color;
                     uv = UV;
-                    normal = (matY * matX * vec4(Normal, 1.0)).xyz;
+                    normal = (rot * vec4(Normal, 1.0)).xyz;
                 }
             </textarea>
 
@@ -96,9 +98,9 @@
                 Light Color<br>
                 <input type="color" id="light" value="#FFFFFF" onchange="Update();">
                 FOV<br>
-                <input type="number"id="fov"value="90"onchange="Render();">
+                <input type="number" id="fov"value="90" onchange="Render();">
                 ZOOM <br>
-                <input type="number"id="zoom"value="1.2"onchange="Render();">
+                <input type="number" id="zoom"value="1.2" onchange="Render();">
                 <div id="ui">Generate UI for geometry here!</div>
             </div>
         </section>
