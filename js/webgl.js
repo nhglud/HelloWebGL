@@ -4,11 +4,17 @@ var gl = document.getElementById('gl').getContext('webgl') ||
 
 var vertices = [];
 
+// Rotation
+
 var mouseX = 0, mouseY = 0;
 var angle = [ 0.0, 0.0, 0.0, 1.0 ];
 var angleGL = 0;
 
+// Texture
+
 var textureGL = 0; 
+
+// Lighting
 
 var display = [ 1.0, 1.0, 1.0, 0.0 ];
 const l = document.getElementById('light').value;
@@ -30,6 +36,26 @@ document.getElementById('gl').addEventListener(
     mouseX = e.x;
     mouseY = e.y;
 });
+
+// Perspective
+
+var proGL = 0;
+var projection = [  
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0 
+];
+
+var modGL = 0;
+var modelView = [   
+    1.0, 0.0, 0.0, 0.0,
+    0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0,
+    0.0, 0.0, -1.2, 1.0 
+];
+
+// functions
 
 function InitWebGL() {
     if(!gl) {
@@ -209,51 +235,51 @@ function CreateBox(width, height, length) {
     const l = length * 0.5;
 
     AddQuad(
-        -w, h, -l, 1.0, 0.0, 0.0, 0.0, 1.0,
-        -w,-h, -l, 1.0, 0.0, 0.0, 0.0, 0.0,
-        w, -h, -l, 1.0, 0.0, 0.0, 1.0, 0.0,
-        w, h, -l, 1.0, 0.0, 0.0, 1.0, 1.0, 
-        0.0, 0.0, 1.0
+        -w, -h, -l, 1.0, 0.0, 0.0, 0.0, 1.0,
+        -w, h, -l, 1.0, 0.0, 0.0, 0.0, 0.0,
+        w, h, -l, 1.0, 0.0, 0.0, 1.0, 0.0,
+        w, -h, -l, 1.0, 0.0, 0.0, 1.0, 1.0, 
+        0.0, 0.0, -1.0
     );
 
     AddQuad(
-        w, h, l, 0.0, 0.0, 1.0,  0.0, 1.0,
-        w,-h, l, 0.0, 0.0, 1.0,  0.0, 0.0,
-        -w,-h, l, 0.0, 0.0, 1.0, 1.0, 0.0,
-        -w, h, l, 0.0, 0.0, 1.0, 1.0, 1.0, 
-        0.0, 0.0, -1.0
+        w, -h, l, 0.0, 0.0, 1.0,  0.0, 1.0,
+        w, h, l, 0.0, 0.0, 1.0,  0.0, 0.0,
+        -w, h, l, 0.0, 0.0, 1.0, 1.0, 0.0,
+        -w, -h, l, 0.0, 0.0, 1.0, 1.0, 1.0, 
+        0.0, 0.0, 1.0
     );  
 
     AddQuad(
-        -w, h, l, 0.0, 1.0, 1.0,   0.0, 1.0,
-        -w, -h, l, 0.0, 1.0, 1.0,  0.0, 0.0,
-        -w, -h, -l, 0.0, 1.0, 1.0, 1.0, 0.0,
-        -w, h, -l, 0.0, 1.0, 1.0,  1.0, 1.0, 
-        1.0, 0.0, 0.0
-    );
-
-    AddQuad(
-        w, -h, l, 0.0, 1.0, 0.0,  1.0, 0.0,
-        w, h, l, 0.0, 1.0, 0.0, 1.0, 1.0,
-        w, h, -l, 0.0, 1.0, 0.0, 0.0, 1.0,
-        w, -h, -l, 0.0, 1.0, 0.0, 0.0, 0.0, 
+        -w, -h, l, 0.0, 1.0, 1.0,   0.0, 1.0,
+        -w, h, l, 0.0, 1.0, 1.0,  0.0, 0.0,
+        -w, h, -l, 0.0, 1.0, 1.0, 1.0, 0.0,
+        -w, -h, -l, 0.0, 1.0, 1.0,  1.0, 1.0, 
         -1.0, 0.0, 0.0
     );
 
     AddQuad(
-        -w, h, l, 1.0, 1.0, 0.0,  0.0, 1.0,
-        -w, h, -l, 1.0, 1.0, 0.0, 0.0, 0.0,
-        w, h, -l, 1.0, 1.0, 0.0, 1.0, 0.0,
-        w, h, l, 1.0, 1.0, 0.0, 1.0, 1.0,
-        0.0, -1.0, 0.0
+        w, h, l, 0.0, 1.0, 0.0,  1.0, 0.0,
+        w, -h, l, 0.0, 1.0, 0.0, 1.0, 1.0,
+        w, -h, -l, 0.0, 1.0, 0.0, 0.0, 1.0,
+        w, h, -l, 0.0, 1.0, 0.0, 0.0, 0.0, 
+        1.0, 0.0, 0.0
+    );
+
+    AddQuad(
+        -w, h, -l, 1.0, 1.0, 0.0,  0.0, 1.0,
+        -w, h, l, 1.0, 1.0, 0.0, 0.0, 0.0,
+        w, h, l, 1.0, 1.0, 0.0, 1.0, 0.0,
+        w, h, -l, 1.0, 1.0, 0.0, 1.0, 1.0,
+        0.0, 1.0, 0.0
     );
     
     AddQuad(
-        -w, -h, l, 1.0, 0.0, 1.0, 0.0, 1.0,
-        w, -h, l, 1.0, 0.0, 1.0, 0.0, 0.0,
-        w, -h, -l, 1.0, 0.0, 1.0, 1.0, 0.0,
-        -w, -h, -l, 1.0, 0.0, 1.0, 1.0, 1.0, 
-        0.0, 1.0, 0.0
+        w, -h, l, 1.0, 0.0, 1.0, 0.0, 1.0,
+        -w, -h, l, 1.0, 0.0, 1.0, 0.0, 0.0,
+        -w, -h, -l, 1.0, 0.0, 1.0, 1.0, 0.0,
+        w, -h, -l, 1.0, 0.0, 1.0, 1.0, 1.0, 
+        0.0, -1.0, 0.0
     );
 }
 
@@ -425,6 +451,9 @@ function CreateGeometryBuffers(program) {
     CreateVBO(program, new Float32Array(vertices));
     
     angleGL = gl.getUniformLocation(program, 'Angle');
+    proGL = gl.getUniformLocation(program, 'Projection');
+    modGL = gl.getUniformLocation(program, 'ModelView');
+
     CreateTexture(program, '../img/tekstur.jpg');
 
     gl.useProgram(program);
@@ -468,6 +497,14 @@ function CreateVBO(program, vert) {
 function Render(){
     gl.clearColor(0.0, 0.4, 0.6, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    const zoom = document.getElementById('zoom').value;
+    modelView[14] = -zoom;
+
+    const fov = document.getElementById('fov').value;
+    const aspect = gl.canvas.width/ gl.canvas.height;
+    Perspective(fov, aspect, 1.0, 2000.0);
+
     gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 11);
 }
 
@@ -588,6 +625,21 @@ function Update()   {
     // Update array to graphics card and render
     gl.uniform4fv(displayGL, new Float32Array(display));
     Render();
+}
+
+function Perspective(fovy, aspect, near, far) {
+    projection.fill(0);
+
+    const f = Math.tan(fovy * Math.PI / 360.0);
+    projection[0] = f / aspect;
+    projection[5] = f;
+    projection[10] = (far + near) / (near - far);
+    projection[11] = (2 * far * near) / (near - far);
+    projection[14] = -1;
+
+    gl.uniformMatrix4fv(proGL, false, new Float32Array(projection));
+    gl.uniformMatrix4fv(modGL, false, new Float32Array(modelView));
+
 }
 
 

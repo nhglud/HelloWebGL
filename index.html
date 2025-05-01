@@ -19,12 +19,15 @@
 
             <textarea id="vs" spellcheck="false">
                 precision mediump float;
+
                 attribute vec3 Pos;
                 attribute vec3 Color;
                 attribute vec2 UV;
                 attribute vec3 Normal;
                 
                 uniform vec4 Angle;
+                uniform mat4 Projection;
+                uniform mat4 ModelView;
 
                 varying vec3 vertexColor;
                 varying vec2 uv;
@@ -51,7 +54,7 @@
                         vec4(0.0, 0.0, 0.0, 1.0)
                     );
 
-                    gl_Position = matY * matX * vec4(Pos, 1.0);
+                    gl_Position = Projection * ModelView * matY * matX * vec4(Pos, 1.0);
                     vertexColor = Color;
                     uv = UV;
                     normal = (matY * matX * vec4(Normal, 1.0)).xyz;
@@ -92,6 +95,8 @@
                 Show Texture
                 <input type="color" id="light" value="#f6b73c" onchange="Update();">
                 Light Color<br>
+                <input type="number"id="fov"value="90"onchange="Render();">FOV<br>
+                <input type="number"id="zoom"value="1.2"onchange="Render();">ZOOM <br>
                 <div id="ui">Generate UI for geometry here!</div>
             </div>
         </section>
